@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "947929715446",
+    "project_id": "akelni-shokran-mealplanner",
+    "storage_bucket": "akelni-shokran-mealplanner.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:947929715446:android:793e09e05db71d1c4a52d7",
+        "android_client_info": {
+          "package_name": "com.ities45.mealplanner"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1ddQt0NaJaBnACl5dMniVk563OQfTgg0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
