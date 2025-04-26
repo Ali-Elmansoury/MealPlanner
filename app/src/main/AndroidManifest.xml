@@ -25,6 +25,18 @@
             android:name=".onboarding.OnBoarding"
             android:exported="true">
         </activity>
+        <activity
+            android:name=".register.Register"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".login.Login"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+        </activity>
     </application>
 
 </manifest>

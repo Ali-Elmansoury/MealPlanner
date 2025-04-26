@@ -1,3 +1,26 @@
 <resources>
     <string name="app_name" translatable="false">Akelni+</string>
+    <string name="logo">logo</string>
+    <string name="background_vector">background vector</string>
+    <string name="your_go_to_easy_meal_planning_mate">Your Go-To easy meal planning mate!</string>
+    <string name="plan_your_meals_discover_healthy_recipes_amp_more"><![CDATA[Plan your meals, discover healthy recipes & more.]]></string>
+    <string name="login">Login</string>
+    <string name="let_s_get_started">Let\'s get started</string>
+    <string name="continue_as_guest">Continue as guest</string>
+    <string name="register">Register</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="name">Name</string>
+    <string name="dont_have_account_register">Don\'t have an account? Register</string>
+    <string name="already_have_account_login">Already have an account? Login</string>
+    <string name="background_image_desc">App background image</string>
+    <string name="app_logo_desc">App logo</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="or_continue_with">Or continue with</string>
+    <string name="continue_with_facebook">Continue with Facebook</string>
+    <string name="continue_with_google">Continue with Google</string>
+    <string name="or_login_with">Or login with</string>
+    <string name="login_with_facebook">Login with Facebook</string>
+    <string name="login_with_google">Login with Google</string>
+
 </resources>

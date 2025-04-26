@@ -50,7 +50,6 @@ dependencies {
     annotationProcessor (libs.compiler)
     implementation(libs.room.runtime)
     annotationProcessor(libs.room.compiler)
-    //implementation(libs.dotlottie.android)
     implementation(libs.dotlottie.android.v062)
 
     implementation(platform(libs.firebase.bom))
