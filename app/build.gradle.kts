@@ -51,6 +51,9 @@ dependencies {
     implementation(libs.room.runtime)
     annotationProcessor(libs.room.compiler)
     implementation(libs.dotlottie.android.v062)
+    implementation (libs.sdp.android)
+    implementation (libs.ssp.android)
+
 
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
