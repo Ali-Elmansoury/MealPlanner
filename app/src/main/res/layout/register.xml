@@ -50,12 +50,12 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etName"
             android:layout_width="380dp"
-            android:layout_height="50dp"
+            android:layout_height="55dp"
             android:layout_gravity="center_horizontal"
             android:background="@color/white"
             android:inputType="textPersonName"
             android:paddingStart="40dp"
-            android:textColor="#CECECE"
+            android:textColor="@color/black"
             android:textSize="18sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -85,9 +85,9 @@
             android:id="@+id/etEmail"
             android:layout_gravity="center"
             android:layout_width="380dp"
-            android:layout_height="50dp"
+            android:layout_height="55dp"
             android:paddingStart="40dp"
-            android:textColor="#CECECE"
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:inputType="textEmailAddress"
             android:background="@color/white"/>
@@ -121,9 +121,9 @@
             android:id="@+id/etPassword"
             android:layout_gravity="center"
             android:layout_width="380dp"
-            android:layout_height="50dp"
+            android:layout_height="55dp"
             android:paddingStart="40dp"
-            android:textColor="#CECECE"
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:inputType="textPassword"
             android:background="@color/white"/>
@@ -157,9 +157,9 @@
             android:id="@+id/etConfirmPassword"
             android:layout_gravity="center"
             android:layout_width="380dp"
-            android:layout_height="50dp"
+            android:layout_height="55dp"
             android:paddingStart="40dp"
-            android:textColor="#CECECE"
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:inputType="textPassword"
             android:background="@color/white"/>
@@ -259,6 +259,7 @@
 
     <!-- Login Link -->
     <TextView
+        android:clickable="true"
         android:id="@+id/tvLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
