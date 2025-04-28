@@ -1,15 +1,18 @@
 package com.ities45.mealplanner.model.pojo;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class IngredientResponse {
+    @SerializedName("meals")
     private List<Ingredient> ingredients;
 
-    public List<Ingredient> getMeals() {
+    public List<Ingredient> getIngredients() {
         return ingredients;
     }
 
-    public void setMeals(List<Ingredient> ingredients) {
+    public void setIngredients(List<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
 }
