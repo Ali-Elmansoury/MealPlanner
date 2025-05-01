@@ -16,8 +16,8 @@ import androidx.core.content.ContextCompat;
 
 import com.ities45.mealplanner.MainActivity;
 import com.ities45.mealplanner.R;
-import com.ities45.mealplanner.login.Login;
-import com.ities45.mealplanner.register.Register;
+import com.ities45.mealplanner.login.view.Login;
+import com.ities45.mealplanner.register.view.Register;
 
 public class OnBoarding extends AppCompatActivity {
     @Override

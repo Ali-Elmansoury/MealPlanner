@@ -484,6 +484,9 @@ public class Meal {
     }
 
     public String getFlagUrl() {
+        String areaCode = AreaMapper.getAreaCode(strArea); // Get the country code
+        // Flag URL, https://flagcdn.com/{size}/{country_code}.png
+        flagUrl = "https://flagcdn.com/64x48/" + areaCode + ".png";
         return flagUrl;
     }
 

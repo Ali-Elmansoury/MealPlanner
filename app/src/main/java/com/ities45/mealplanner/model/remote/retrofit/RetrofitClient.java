@@ -23,11 +23,21 @@ public class RetrofitClient {
         Cache cache = new Cache(context.getCacheDir(), cacheSize);
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .cache(cache)
-                // Interceptor to cache responses even if the server doesn't
+                // Interceptor to cache responses, skipping cache for random.php
                 .addNetworkInterceptor(chain -> {
-                    okhttp3.Response response = chain.proceed(chain.request());
+                    okhttp3.Request request = chain.request();
+                    okhttp3.Response response = chain.proceed(request);
+
+                    if (request.url().encodedPath().contains("random.php")) {
+                        // Disable caching for random meal endpoint
+                        return response.newBuilder()
+                                .header("Cache-Control", "no-cache")
+                                .build();
+                    }
+
+                    // Default cache policy (1 day)
                     return response.newBuilder()
-                            .header("Cache-Control", "public, max-age=" + 60 * 60 * 24) // cache for 1 day
+                            .header("Cache-Control", "public, max-age=" + 60 * 60 * 24)
                             .build();
                 })
                 // Offline cache interceptor
@@ -42,6 +52,7 @@ public class RetrofitClient {
                     return chain.proceed(request);
                 })
                 .build();
+
 
         builder = new Retrofit.Builder()
                 .baseUrl(BASE_URL)

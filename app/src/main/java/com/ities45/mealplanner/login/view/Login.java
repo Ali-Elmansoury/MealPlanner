@@ -1,4 +1,4 @@
-package com.ities45.mealplanner.login;
+package com.ities45.mealplanner.login.view;
 
 import android.os.Bundle;
 

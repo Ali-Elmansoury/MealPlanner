@@ -1,8 +1,5 @@
 package com.ities45.mealplanner.model.remote.meals;
 
-import com.ities45.mealplanner.model.pojo.AreaResponse;
-import com.ities45.mealplanner.model.pojo.CategoryResponse;
-import com.ities45.mealplanner.model.pojo.IngredientResponse;
 import com.ities45.mealplanner.model.pojo.MealResponse;
 
 import retrofit2.Call;

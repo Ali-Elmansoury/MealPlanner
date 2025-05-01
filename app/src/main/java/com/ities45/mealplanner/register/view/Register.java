@@ -1,4 +1,4 @@
-package com.ities45.mealplanner.register;
+package com.ities45.mealplanner.register.view;
 
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -15,7 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.ities45.mealplanner.R;
-import com.ities45.mealplanner.login.Login;
+import com.ities45.mealplanner.login.view.Login;
 
 public class Register extends AppCompatActivity {
     @Override

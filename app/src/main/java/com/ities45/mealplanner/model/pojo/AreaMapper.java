@@ -40,6 +40,7 @@ public class AreaMapper {
     }
 
     public static String getAreaCode(String areaName) {
-        return AREA_CODE_MAP.getOrDefault(areaName, "EG"); // Default to EG if not found
+        // Convert the area code to lowercase before returning
+        return AREA_CODE_MAP.getOrDefault(areaName, "EG").toLowerCase();
     }
 }

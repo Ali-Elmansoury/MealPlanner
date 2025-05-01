@@ -14,5 +14,11 @@ public class AreaResponse {
 
     public void setAreas(List<Area> areas) {
         this.areas = areas;
+//        for (Area area : areas){
+//            String areaName = area.getStrArea();
+//            String areaCode = AreaMapper.getAreaCode(areaName); // Get the country code
+//            String flagUrl = "https://flagcdn.com/64x48/" + areaCode + ".png"; // Flag URL, https://flagcdn.com/{size}/{country_code}.png
+//            area.setFlagUrl(flagUrl);
+//        }
     }
 }
