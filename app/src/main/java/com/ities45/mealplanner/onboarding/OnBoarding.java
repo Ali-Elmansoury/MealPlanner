@@ -14,7 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import com.ities45.mealplanner.MainActivity;
+import com.ities45.mealplanner.mainactivity.view.MainActivity;
 import com.ities45.mealplanner.R;
 import com.ities45.mealplanner.login.view.Login;
 import com.ities45.mealplanner.register.view.Register;

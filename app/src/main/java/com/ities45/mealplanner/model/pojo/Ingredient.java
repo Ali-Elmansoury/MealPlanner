@@ -5,6 +5,16 @@ public class Ingredient {
     private String strIngredient;
     private String strDescription;
     private String strType;
+    private String ingredientUrl;
+
+    public String getIngredientUrl() {
+        ingredientUrl = "https://www.themealdb.com/images/ingredients/" + strIngredient.toLowerCase() + "-small.png";
+        return ingredientUrl;
+    }
+
+    public void setIngredientUrl(String ingredientUrl) {
+        this.ingredientUrl = ingredientUrl;
+    }
 
     public String getIdIngredient() {
         return idIngredient;

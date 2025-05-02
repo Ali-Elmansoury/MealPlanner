@@ -1,4 +1,4 @@
-package com.ities45.mealplanner;
+package com.ities45.mealplanner.mainactivity.view;
 
 import android.os.Bundle;
 
@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.ities45.mealplanner.R;
 import com.ities45.mealplanner.home.view.HomeFragment;
 
 public class MainActivity extends AppCompatActivity {

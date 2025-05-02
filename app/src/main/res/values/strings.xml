@@ -37,5 +37,20 @@
     <string name="planned">Planned</string>
     <string name="favorites">Favorites</string>
     <string name="profile">Profile</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="instructions">Instructions</string>
+    <string name="_1_mix_the_ingredients_n2_bake_at_350_f">1. Mix the ingredients…\n2. Bake at 350°F...</string>
+    <string name="watch_the_recipe">Watch the Recipe</string>
+    <string name="add_to_my_meal_plan">Add to my meal plan</string>
+    <string name="ingredient_name">Ingredient Name</string>
+    <string name="grams">grams</string>
+    <string name="go_to_planned_meals">Go to Planned Meals</string>
+    <string name="go_to_favorite_meals">Go to Favorite Meals</string>
+    <string name="no_internet_connection_please_check_your_connection_to_access_the_home_screen_you_can_still_view_your_favourite_and_planned_meals">No internet connection. Please check your connection to access the Home screen. You can still view your Favourite and Planned meals.</string>
+    <string name="check_internet_connection">Check Internet Connection</string>
+    <string name="warning">Warning</string>
+    <string name="retry">Retry</string>
+    <string name="view_by_ingredients">View by Ingredients</string>
+    <string name="ingredient">Ingredient</string>
 
 </resources>

@@ -5,5 +5,9 @@ public interface IHomePresenter {
     void getPopularMeals();
     void getCategories();
     void getAreas();
+    void getIngredients();
     void MagicMealRoulette();
+    void checkConnectionAndUpdateUI();
+    void onResume();
+    void onPause();
 }

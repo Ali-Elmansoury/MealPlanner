@@ -34,4 +34,7 @@ public interface IMealsRepository {
     void getAllMealCategories(ICategoriesNetworkCallback networkCallback);
 
     void listAllCategoriesNames(ICategoriesNetworkCallback networkCallback);
+    boolean isNetworkAvailable();
+    void registerNetworkCallback();
+    void unregisterNetworkCallback();
 }

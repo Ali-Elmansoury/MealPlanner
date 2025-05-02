@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="@dimen/_14sdp"
+    app:cardCornerRadius="@dimen/_20sdp"
+    app:cardElevation="@dimen/_6sdp"
+    android:background="@android:color/transparent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_20sdp"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:background="@android:color/white">
+
+        <!-- Warning Icon -->
+        <ImageView
+            android:layout_width="@dimen/_45sdp"
+            android:layout_height="@dimen/_45sdp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/danger"
+            android:contentDescription="@string/warning" />
+
+        <!-- Header Text -->
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_marginTop="@dimen/_14sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="@string/check_internet_connection"
+            android:textColor="@color/secondary"
+            android:textSize="@dimen/_15ssp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textAlignment="center"/>
+
+        <!-- Subtext -->
+        <TextView
+            android:id="@+id/tvDescription"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_internet_connection_please_check_your_connection_to_access_the_home_screen_you_can_still_view_your_favourite_and_planned_meals"
+            android:textColor="#666666"
+            android:textSize="@dimen/_12ssp"
+            android:fontFamily="@font/montserrat_medium"
+            android:gravity="center"
+            android:textAlignment="center"/>
+
+        <!-- Button 1 -->
+        <Button
+            android:id="@+id/btnRetry"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/retry"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_11ssp"
+            android:fontFamily="@font/montserrat_medium"
+            android:backgroundTint="@color/warning"
+            app:strokeColor="@color/secondary"
+            app:strokeWidth="@dimen/_1sdp"
+            android:padding="@dimen/_12sdp"/>
+
+        <!-- Button 2 -->
+        <Button
+            android:id="@+id/btnPlannedMeals"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/go_to_planned_meals"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/_11ssp"
+            android:fontFamily="@font/montserrat_medium"
+            android:backgroundTint="@color/btn"
+            app:strokeColor="@color/secondary"
+            app:strokeWidth="@dimen/_1sdp"
+            android:padding="@dimen/_12sdp"/>
+
+        <!-- Button 3 -->
+        <Button
+            android:id="@+id/btnFavMeals"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/go_to_favorite_meals"
+            android:textAllCaps="false"
+            android:textColor="@color/btn"
+            android:textSize="@dimen/_11ssp"
+            android:fontFamily="@font/montserrat_medium"
+            android:backgroundTint="@color/white"
+            app:strokeColor="@color/secondary"
+            app:strokeWidth="@dimen/_1sdp"
+            android:padding="@dimen/_12sdp"/>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

@@ -1,13 +1,13 @@
 package com.ities45.mealplanner.home.presenter;
 
-import android.util.Log;
-
 import com.ities45.mealplanner.home.view.IHomeFragmentView;
 import com.ities45.mealplanner.model.pojo.Area;
 import com.ities45.mealplanner.model.pojo.Category;
+import com.ities45.mealplanner.model.pojo.Ingredient;
 import com.ities45.mealplanner.model.pojo.Meal;
 import com.ities45.mealplanner.model.remote.areas.IAreasNetworkCallback;
 import com.ities45.mealplanner.model.remote.categories.ICategoriesNetworkCallback;
+import com.ities45.mealplanner.model.remote.ingredients.I_IngredientsNetworkCallback;
 import com.ities45.mealplanner.model.remote.meals.IMealsNetworkCallback;
 import com.ities45.mealplanner.model.repository.meals.IMealsRepository;
 
@@ -83,13 +83,26 @@ public class HomePresenterImpl implements IHomePresenter{
     }
 
     @Override
+    public void getIngredients() {
+        repo.listAllIngredients(new I_IngredientsNetworkCallback() {
+            @Override
+            public void onGetIngredientsSuccess(List<Ingredient> ingredients) {
+                view.showIngredients(ingredients);
+            }
+
+            @Override
+            public void onGetIngredientsFailure(String errMsg) {
+                view.showErrMsg(errMsg);
+            }
+        });
+    }
+
+    @Override
     public void MagicMealRoulette() {
         repo.getRandomMeal(new IMealsNetworkCallback() {
             @Override
             public void onGetMealsSuccess(List<Meal> meals) {
                 view.showMealOfTheDay(meals.get(0));
-
-
             }
 
             @Override
@@ -97,5 +110,31 @@ public class HomePresenterImpl implements IHomePresenter{
                 view.showErrMsg(errMsg);
             }
         });
+    }
+
+    @Override
+    public void checkConnectionAndUpdateUI() {
+        if (repo.isNetworkAvailable()) {
+            view.showMainContent();
+            getMealOfTheDay();
+            getPopularMeals();
+            getCategories();
+            getAreas();
+            getIngredients();
+        } else {
+            view.showNoInternetLayout();
+            view.showErrMsg("No internet");
+        }
+    }
+
+    @Override
+    public void onResume() {
+        repo.registerNetworkCallback();
+        checkConnectionAndUpdateUI();
+    }
+
+    @Override
+    public void onPause() {
+        repo.unregisterNetworkCallback();
     }
 }

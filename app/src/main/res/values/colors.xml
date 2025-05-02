@@ -6,5 +6,6 @@
     <color name="secondary">#06140E</color>
     <color name="btn">#217857</color>
     <color name="transparent">#00000000</color> <!-- Fully transparent -->
+    <color name="warning">#FFC107</color>
 
 </resources>

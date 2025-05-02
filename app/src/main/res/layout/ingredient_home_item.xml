@@ -2,8 +2,8 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="@dimen/_90sdp"
-    android:layout_height="@dimen/_85sdp"
+    android:layout_width="@dimen/_85sdp"
+    android:layout_height="@dimen/_100sdp"
     android:layout_margin="@dimen/_6sdp"
     app:cardCornerRadius="@dimen/_6sdp"
     app:cardElevation="@dimen/_4sdp">
@@ -15,18 +15,18 @@
         android:gravity="center">
 
         <ImageView
-            android:id="@+id/imgFlag"
+            android:id="@+id/imgIngredient"
             android:layout_width="@dimen/_55sdp"
-            android:layout_height="@dimen/_45sdp"
-            android:scaleType="fitCenter"
+            android:layout_height="@dimen/_55sdp"
+            android:scaleType="centerCrop"
             android:src="@drawable/ic_launcher_background"/>
 
         <TextView
-            android:id="@+id/txtAreaName"
+            android:id="@+id/txtIngredientName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_6sdp"
-            android:text="@string/country"
+            android:text="@string/ingredient"
             android:fontFamily="@font/montserrat_bold"
             android:textSize="@dimen/_10ssp"
             android:textAlignment="center"/>

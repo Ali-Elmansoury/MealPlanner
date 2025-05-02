@@ -39,10 +39,6 @@ public class AreasAdapter extends RecyclerView.Adapter<AreasAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull AreasAdapter.ViewHolder holder, int position) {
         Area area = areas.get(position);
         holder.areaName.setText(areas.get(position).getStrArea());
-//        String areaName = area.getStrArea();
-//        String areaCode = AreaMapper.getAreaCode(areaName); // Get the country code
-//        String flagUrl = "https://flagcdn.com/64x48/" + areaCode + ".png"; // Flag URL, https://flagcdn.com/{size}/{country_code}.png
-//        area.setFlagUrl(flagUrl);
         Glide.with(holder.areaFlagThumb.getContext())
                 .load(area.getFlagUrl())
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
