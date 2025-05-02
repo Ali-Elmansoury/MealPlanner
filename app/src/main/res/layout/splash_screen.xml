@@ -6,7 +6,7 @@
     android:background="#2EA97A">
 
     <com.lottiefiles.dotlottie.core.widget.DotLottieAnimation
-        android:id="@+id/lottie_view"
+        android:id="@+id/lottie_splash"
         android:layout_width="400dp"
         android:layout_height="400dp"
         app:dotLottie_src=""

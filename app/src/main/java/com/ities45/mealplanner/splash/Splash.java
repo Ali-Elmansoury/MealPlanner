@@ -23,7 +23,7 @@ public class Splash extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen);
 
-        splashAnim = findViewById(R.id.lottie_view);
+        splashAnim = findViewById(R.id.lottie_splash);
         Config config = new Config.Builder()
                 .autoplay(true)
                 .speed(1f)
