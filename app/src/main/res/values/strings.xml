@@ -52,5 +52,6 @@
     <string name="retry">Retry</string>
     <string name="view_by_ingredients">View by Ingredients</string>
     <string name="ingredient">Ingredient</string>
+    <string name="home">Home</string>
 
 </resources>
