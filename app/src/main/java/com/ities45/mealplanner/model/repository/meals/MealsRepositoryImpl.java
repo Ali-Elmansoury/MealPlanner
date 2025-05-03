@@ -1,6 +1,10 @@
 package com.ities45.mealplanner.model.repository.meals;
 
+import androidx.lifecycle.LiveData;
+
+import com.ities45.mealplanner.model.local.db.IMealsLocalDataSource;
 import com.ities45.mealplanner.model.local.networklistener.NetworkManager;
+import com.ities45.mealplanner.model.pojo.Meal;
 import com.ities45.mealplanner.model.remote.areas.IAreasNetworkCallback;
 import com.ities45.mealplanner.model.remote.areas.IAreasRemoteDataSource;
 import com.ities45.mealplanner.model.remote.categories.ICategoriesNetworkCallback;
@@ -10,6 +14,8 @@ import com.ities45.mealplanner.model.remote.ingredients.I_IngredientsRemoteDataS
 import com.ities45.mealplanner.model.remote.meals.IMealsNetworkCallback;
 import com.ities45.mealplanner.model.remote.meals.IMealsRemoteDataSource;
 
+import java.util.List;
+
 public class MealsRepositoryImpl implements IMealsRepository{
     private static MealsRepositoryImpl repo = null;
     private IMealsRemoteDataSource mealsRemoteDataSource;
@@ -17,18 +23,20 @@ public class MealsRepositoryImpl implements IMealsRepository{
     private IAreasRemoteDataSource areasRemoteDataSource;
     private I_IngredientsRemoteDataSource ingredientsRemoteDataSource;
     private NetworkManager networkManager;
+    private IMealsLocalDataSource mealsLocalDataSource;
 
-    private MealsRepositoryImpl(IMealsRemoteDataSource mealsRemoteDataSource, ICategoriesRemoteDataSource categoriesRemoteDataSource, IAreasRemoteDataSource areasRemoteDataSource, I_IngredientsRemoteDataSource ingredientsRemoteDataSource, NetworkManager networkManager) {
+    private MealsRepositoryImpl(IMealsRemoteDataSource mealsRemoteDataSource, ICategoriesRemoteDataSource categoriesRemoteDataSource, IAreasRemoteDataSource areasRemoteDataSource, I_IngredientsRemoteDataSource ingredientsRemoteDataSource, NetworkManager networkManager, IMealsLocalDataSource mealsLocalDataSource) {
         this.mealsRemoteDataSource = mealsRemoteDataSource;
         this.categoriesRemoteDataSource = categoriesRemoteDataSource;
         this.areasRemoteDataSource = areasRemoteDataSource;
         this.ingredientsRemoteDataSource = ingredientsRemoteDataSource;
         this.networkManager = networkManager;
+        this.mealsLocalDataSource = mealsLocalDataSource;
     }
 
-    public static MealsRepositoryImpl getInstance(IMealsRemoteDataSource mealsRemoteDataSource, ICategoriesRemoteDataSource categoriesRemoteDataSource, IAreasRemoteDataSource areasRemoteDataSource, I_IngredientsRemoteDataSource ingredientsRemoteDataSource, NetworkManager networkManager){
+    public static MealsRepositoryImpl getInstance(IMealsRemoteDataSource mealsRemoteDataSource, ICategoriesRemoteDataSource categoriesRemoteDataSource, IAreasRemoteDataSource areasRemoteDataSource, I_IngredientsRemoteDataSource ingredientsRemoteDataSource, NetworkManager networkManager, IMealsLocalDataSource mealsLocalDataSource){
         if(repo == null){
-            repo = new MealsRepositoryImpl(mealsRemoteDataSource, categoriesRemoteDataSource, areasRemoteDataSource, ingredientsRemoteDataSource, networkManager);
+            repo = new MealsRepositoryImpl(mealsRemoteDataSource, categoriesRemoteDataSource, areasRemoteDataSource, ingredientsRemoteDataSource, networkManager, mealsLocalDataSource);
         }
         return repo;
     }
@@ -102,5 +110,40 @@ public class MealsRepositoryImpl implements IMealsRepository{
     @Override
     public void unregisterNetworkCallback() {
         networkManager.unregisterNetworkCallback();
+    }
+
+    @Override
+    public void insertLocalMeal(Meal meal) {
+        mealsLocalDataSource.insertLocalMeal(meal);
+    }
+
+    @Override
+    public void insertLocalAllMeals(List<Meal> meals) {
+        mealsLocalDataSource.insertLocalAllMeals(meals);
+    }
+
+    @Override
+    public LiveData<List<Meal>> getAllLocalStoredMeals() {
+        return mealsLocalDataSource.getAllLocalStoredMeals();
+    }
+
+    @Override
+    public LiveData<Meal> getLocalMealById(String id) {
+        return mealsLocalDataSource.getLocalMealById(id);
+    }
+
+    @Override
+    public void deleteLocalMeal(Meal meal) {
+        mealsLocalDataSource.deleteLocalMeal(meal);
+    }
+
+    @Override
+    public void deleteAllLocalMeals() {
+        mealsLocalDataSource.deleteAllLocalMeals();
+    }
+
+    @Override
+    public void updateLocalMeal(Meal meal) {
+        mealsLocalDataSource.updateLocalMeal(meal);
     }
 }

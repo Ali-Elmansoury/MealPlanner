@@ -20,6 +20,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.ities45.mealplanner.R;
 import com.ities45.mealplanner.home.presenter.HomePresenterImpl;
 import com.ities45.mealplanner.home.presenter.IHomePresenter;
+import com.ities45.mealplanner.model.local.db.MealsLocalDataSourceImpl;
 import com.ities45.mealplanner.model.local.networklistener.INetworkStatusListener;
 import com.ities45.mealplanner.model.local.networklistener.NetworkManager;
 import com.ities45.mealplanner.model.pojo.Area;
@@ -113,7 +114,8 @@ public class HomeFragment extends Fragment implements IHomeFragmentView, INetwor
                         CategoriesRemoteDataSourceImpl.getInstance(getContext()),
                         AreasRemoteDataSourceImpl.getInstance(getContext()),
                         IngredientsRemoteDataSourceImpl.getInstance(getContext()),
-                        NetworkManager.getInstance(getContext(), this)
+                        NetworkManager.getInstance(getContext(), this),
+                        MealsLocalDataSourceImpl.getInstance(getContext())
                 ));
     }
 

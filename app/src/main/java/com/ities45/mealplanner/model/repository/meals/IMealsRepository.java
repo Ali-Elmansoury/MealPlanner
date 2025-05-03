@@ -1,9 +1,14 @@
 package com.ities45.mealplanner.model.repository.meals;
 
+import androidx.lifecycle.LiveData;
+
+import com.ities45.mealplanner.model.pojo.Meal;
 import com.ities45.mealplanner.model.remote.areas.IAreasNetworkCallback;
 import com.ities45.mealplanner.model.remote.categories.ICategoriesNetworkCallback;
 import com.ities45.mealplanner.model.remote.ingredients.I_IngredientsNetworkCallback;
 import com.ities45.mealplanner.model.remote.meals.IMealsNetworkCallback;
+
+import java.util.List;
 
 public interface IMealsRepository {
     // For Get meals by category
@@ -34,7 +39,17 @@ public interface IMealsRepository {
     void getAllMealCategories(ICategoriesNetworkCallback networkCallback);
 
     void listAllCategoriesNames(ICategoriesNetworkCallback networkCallback);
+
+
     boolean isNetworkAvailable();
     void registerNetworkCallback();
     void unregisterNetworkCallback();
+
+    void insertLocalMeal(Meal meal);
+    void insertLocalAllMeals(List<Meal> meals);
+    LiveData<List<Meal>> getAllLocalStoredMeals();
+    LiveData<Meal> getLocalMealById(String id);
+    void deleteLocalMeal(Meal meal);
+    void deleteAllLocalMeals();
+    void updateLocalMeal(Meal meal);
 }
