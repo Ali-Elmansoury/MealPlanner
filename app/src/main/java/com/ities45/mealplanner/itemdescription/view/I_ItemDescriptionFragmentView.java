@@ -1,4 +1,11 @@
 package com.ities45.mealplanner.itemdescription.view;
 
+import com.ities45.mealplanner.model.pojo.Meal;
+
 public interface I_ItemDescriptionFragmentView {
+    void showMeal(Meal meal);
+
+    void showErrMsg(String errorMsg);
+    void showMainContent();
+    void showNoInternetLayout();
 }

@@ -11,7 +11,6 @@ import java.util.List;
 public class MealsLocalDataSourceImpl implements IMealsLocalDataSource{
     private Context context;
     private IMealsDao mealsDao;
-    private LiveData<List<Meal>> storedLocalMeals;
 
     private static MealsLocalDataSourceImpl localDataSource = null;
 
@@ -19,7 +18,6 @@ public class MealsLocalDataSourceImpl implements IMealsLocalDataSource{
         this.context = context;
         MealsDatabase db = MealsDatabase.getInstance(context.getApplicationContext());
         mealsDao = db.getMealsDao();
-        storedLocalMeals = mealsDao.getAllMeals();
     }
 
     public static MealsLocalDataSourceImpl getInstance(Context context){
@@ -53,7 +51,7 @@ public class MealsLocalDataSourceImpl implements IMealsLocalDataSource{
 
     @Override
     public LiveData<List<Meal>> getAllLocalStoredMeals() {
-        return storedLocalMeals;
+        return mealsDao.getAllMeals();
     }
 
     @Override
@@ -90,6 +88,43 @@ public class MealsLocalDataSourceImpl implements IMealsLocalDataSource{
             public void run() {
                 super.run();
                 mealsDao.updateMeal(meal);
+            }
+        }.start();
+    }
+
+    @Override
+    public LiveData<List<Meal>> getLocalFavouriteMeals() {
+        return mealsDao.getFavouriteMeals();
+    }
+
+    @Override
+    public LiveData<List<Meal>> getLocalPlannedMeals() {
+        return mealsDao.getPlannedMeals();
+    }
+
+    @Override
+    public LiveData<List<Meal>> getLocalFavOrPlannedMeals() {
+        return mealsDao.getFavOrPlannedMeals();
+    }
+
+    @Override
+    public void updateFavStatus(String id, boolean isFav) {
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                mealsDao.updateFavStatus(id, isFav);
+            }
+        }.start();
+    }
+
+    @Override
+    public void updatePlannedStatus(String id, boolean isPlanned) {
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                mealsDao.updatePlannedStatus(id, isPlanned);
             }
         }.start();
     }

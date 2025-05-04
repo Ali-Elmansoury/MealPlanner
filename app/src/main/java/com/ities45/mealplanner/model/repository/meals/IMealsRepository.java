@@ -45,6 +45,7 @@ public interface IMealsRepository {
     void registerNetworkCallback();
     void unregisterNetworkCallback();
 
+
     void insertLocalMeal(Meal meal);
     void insertLocalAllMeals(List<Meal> meals);
     LiveData<List<Meal>> getAllLocalStoredMeals();
@@ -52,4 +53,10 @@ public interface IMealsRepository {
     void deleteLocalMeal(Meal meal);
     void deleteAllLocalMeals();
     void updateLocalMeal(Meal meal);
+
+    LiveData<List<Meal>> getLocalFavouriteMeals();
+    LiveData<List<Meal>> getLocalPlannedMeals();
+    LiveData<List<Meal>> getLocalFavOrPlannedMeals();
+    void updateFavStatus(String id, boolean isFav);
+    void updatePlannedStatus(String id, boolean isPlanned);
 }

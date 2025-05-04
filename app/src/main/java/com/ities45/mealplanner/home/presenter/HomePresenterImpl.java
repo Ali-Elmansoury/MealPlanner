@@ -1,6 +1,7 @@
 package com.ities45.mealplanner.home.presenter;
 
 import com.ities45.mealplanner.home.view.IHomeFragmentView;
+import com.ities45.mealplanner.mainactivity.view.ICommunicator;
 import com.ities45.mealplanner.model.pojo.Area;
 import com.ities45.mealplanner.model.pojo.Category;
 import com.ities45.mealplanner.model.pojo.Ingredient;
@@ -16,10 +17,12 @@ import java.util.List;
 public class HomePresenterImpl implements IHomePresenter{
     private IHomeFragmentView view;
     private IMealsRepository repo;
+    private ICommunicator communicator;
 
-    public HomePresenterImpl(IHomeFragmentView view, IMealsRepository repo) {
+    public HomePresenterImpl(IHomeFragmentView view, IMealsRepository repo, ICommunicator communicator) {
         this.view = view;
         this.repo = repo;
+        this.communicator = communicator;
     }
 
     @Override
@@ -136,5 +139,15 @@ public class HomePresenterImpl implements IHomePresenter{
     @Override
     public void onPause() {
         repo.unregisterNetworkCallback();
+    }
+
+    @Override
+    public void onMealClicked(Meal meal){
+        communicator.sendMealToItemDescriptionFragment(meal);
+    }
+
+    @Override
+    public void onMealIdClicked(String id) {
+        communicator.sendMealIdToItemDescriptionFragment(id);
     }
 }

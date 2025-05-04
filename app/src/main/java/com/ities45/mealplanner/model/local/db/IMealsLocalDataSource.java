@@ -14,4 +14,12 @@ public interface IMealsLocalDataSource {
     void deleteLocalMeal(Meal meal);
     void deleteAllLocalMeals();
     void updateLocalMeal(Meal meal);
+
+    LiveData<List<Meal>> getLocalFavouriteMeals();
+    LiveData<List<Meal>> getLocalPlannedMeals();
+    LiveData<List<Meal>> getLocalFavOrPlannedMeals();
+    void updateFavStatus(String id, boolean isFav);
+    void updatePlannedStatus(String id, boolean isPlanned);
+
+
 }

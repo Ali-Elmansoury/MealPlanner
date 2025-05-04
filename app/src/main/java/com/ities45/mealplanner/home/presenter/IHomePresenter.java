@@ -1,5 +1,7 @@
 package com.ities45.mealplanner.home.presenter;
 
+import com.ities45.mealplanner.model.pojo.Meal;
+
 public interface IHomePresenter {
     void getMealOfTheDay();
     void getPopularMeals();
@@ -10,4 +12,7 @@ public interface IHomePresenter {
     void checkConnectionAndUpdateUI();
     void onResume();
     void onPause();
+
+    void onMealClicked(Meal meal);
+    void onMealIdClicked(String id);
 }

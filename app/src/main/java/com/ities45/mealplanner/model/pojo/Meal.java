@@ -1,11 +1,13 @@
 package com.ities45.mealplanner.model.pojo;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "meals")
 public class Meal {
     @PrimaryKey
+    @NonNull
     private String idMeal;
     private String strMeal;
     private String strDrinkAlternate;

@@ -45,7 +45,7 @@ public class PopularMealsAdapter extends RecyclerView.Adapter<PopularMealsAdapte
         holder.meal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onPopularMealClick(meal);
+                listener.onPopularMealClick(meal.getIdMeal());
             }
         });
     }

@@ -1,5 +1,6 @@
 package com.ities45.mealplanner.home.view;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.ities45.mealplanner.R;
 import com.ities45.mealplanner.home.presenter.HomePresenterImpl;
 import com.ities45.mealplanner.home.presenter.IHomePresenter;
+import com.ities45.mealplanner.mainactivity.view.ICommunicator;
 import com.ities45.mealplanner.model.local.db.MealsLocalDataSourceImpl;
 import com.ities45.mealplanner.model.local.networklistener.INetworkStatusListener;
 import com.ities45.mealplanner.model.local.networklistener.NetworkManager;
@@ -49,6 +51,8 @@ public class HomeFragment extends Fragment implements IHomeFragmentView, INetwor
     private View homeContentLayout;
     private View noInternetLayout;
     private Button btnRetry, btnGoToFavorites, btnGoToPlanned;
+    private ICommunicator communicator;
+    private Meal motd = new Meal();
 
     public HomeFragment() {
         // Required empty public constructor
@@ -59,7 +63,7 @@ public class HomeFragment extends Fragment implements IHomeFragmentView, INetwor
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.today_fragment, container, false);
+        return inflater.inflate(R.layout.home_no_net_fragment, container, false);
     }
 
     @Override
@@ -116,12 +120,13 @@ public class HomeFragment extends Fragment implements IHomeFragmentView, INetwor
                         IngredientsRemoteDataSourceImpl.getInstance(getContext()),
                         NetworkManager.getInstance(getContext(), this),
                         MealsLocalDataSourceImpl.getInstance(getContext())
-                ));
+                ), communicator);
     }
 
     private void setupListeners() {
         btnRetry.setOnClickListener(v -> presenter.checkConnectionAndUpdateUI());
         mmBtn.setOnClickListener(v -> presenter.MagicMealRoulette());
+        motdI.setOnClickListener(v -> presenter.onMealClicked(motd));
         // btnGoToFavorites.setOnClickListener(v -> navigateToFragment(new FavoritesFragment()));
         // btnGoToPlanned.setOnClickListener(v -> navigateToFragment(new PlannedMealsFragment()));
     }
@@ -131,14 +136,15 @@ public class HomeFragment extends Fragment implements IHomeFragmentView, INetwor
         Glide.with(motdI.getContext()).load(meal.getStrMealThumb())
                 .diskCacheStrategy(DiskCacheStrategy.ALL).into(motdI);
         motdT.setText(meal.getStrMeal());
+        motd = meal;
     }
 
     @Override
     public void showPopularMeals(List<Meal> meals) {
         popularMealsAdapter = new PopularMealsAdapter(meals, new IOnPopularMealClickListener() {
             @Override
-            public void onPopularMealClick(Meal meal) {
-                // Handle click event
+            public void onPopularMealClick(String id) {
+                presenter.onMealIdClicked(id);
             }
         });
         rvPopMeals.setAdapter(popularMealsAdapter);
@@ -179,7 +185,7 @@ public class HomeFragment extends Fragment implements IHomeFragmentView, INetwor
 
     @Override
     public void showErrMsg(String errorMsg) {
-        Toast.makeText(getContext(), errorMsg, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), errorMsg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -222,5 +228,11 @@ public class HomeFragment extends Fragment implements IHomeFragmentView, INetwor
     @Override
     public void onNetworkLost() {
         presenter.checkConnectionAndUpdateUI();
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        communicator = (ICommunicator) context;
     }
 }

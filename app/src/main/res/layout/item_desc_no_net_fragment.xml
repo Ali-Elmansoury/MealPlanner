@@ -1,0 +1,15 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Main Content Layout -->
+    <include
+        android:id="@+id/itemDescContentLayout"
+        layout="@layout/item_description_fragment" />
+
+    <!-- No Internet Layout -->
+    <include
+        android:id="@+id/noInternetLayout"
+        layout="@layout/dialog_no_internet"
+        android:visibility="gone" />
+</FrameLayout>

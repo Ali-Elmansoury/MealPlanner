@@ -146,4 +146,29 @@ public class MealsRepositoryImpl implements IMealsRepository{
     public void updateLocalMeal(Meal meal) {
         mealsLocalDataSource.updateLocalMeal(meal);
     }
+
+    @Override
+    public LiveData<List<Meal>> getLocalFavouriteMeals() {
+        return mealsLocalDataSource.getLocalFavouriteMeals();
+    }
+
+    @Override
+    public LiveData<List<Meal>> getLocalPlannedMeals() {
+        return mealsLocalDataSource.getLocalPlannedMeals();
+    }
+
+    @Override
+    public LiveData<List<Meal>> getLocalFavOrPlannedMeals() {
+        return mealsLocalDataSource.getLocalFavOrPlannedMeals();
+    }
+
+    @Override
+    public void updateFavStatus(String id, boolean isFav) {
+        mealsLocalDataSource.updateFavStatus(id, isFav);
+    }
+
+    @Override
+    public void updatePlannedStatus(String id, boolean isPlanned) {
+        mealsLocalDataSource.updatePlannedStatus(id, isPlanned);
+    }
 }
