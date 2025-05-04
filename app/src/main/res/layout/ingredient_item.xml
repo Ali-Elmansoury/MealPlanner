@@ -21,18 +21,19 @@
     <!-- Ingredient Measure -->
     <TextView
         android:id="@+id/ingredientNameTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat_bold"
         android:text="@string/ingredient_name"
         android:textColor="@color/secondary"
         android:textSize="@dimen/_14ssp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@id/measureTextView"
-        app:layout_constraintHorizontal_bias="0.109"
         app:layout_constraintStart_toEndOf="@id/ingredientImageView"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toStartOf="@id/measureTextView"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="@dimen/_8sdp"/>
 
+    <!-- Ingredient Measure -->
     <TextView
         android:id="@+id/measureTextView"
         android:layout_width="wrap_content"
@@ -42,5 +43,5 @@
         android:textColor="#666666"
         android:textSize="@dimen/_13ssp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
