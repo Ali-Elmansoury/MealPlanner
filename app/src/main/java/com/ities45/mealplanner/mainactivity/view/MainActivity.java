@@ -7,11 +7,12 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ities45.mealplanner.R;
+import com.ities45.mealplanner.favoritemeal.view.FavoriteMealsFragment;
 import com.ities45.mealplanner.home.view.HomeFragment;
 import com.ities45.mealplanner.itemdescription.view.ItemDescriptionFragment;
 import com.ities45.mealplanner.model.pojo.Meal;
 
-public class MainActivity extends AppCompatActivity implements ICommunicator{
+public class MainActivity extends AppCompatActivity implements IHomeCommunicator, IFavoriteMealCommunicator {
 
     private BottomNavigationView bottomNav;
 
@@ -42,9 +43,9 @@ public class MainActivity extends AppCompatActivity implements ICommunicator{
 //                else if (id == R.id.nav_planned) {
 //
 //                }
-//                else if (id == R.id.nav_fav) {
-//
-//                }
+                else if (id == R.id.nav_fav) {
+                    selectedFragment = new FavoriteMealsFragment();
+                }
 //                else if (id == R.id.nav_profile) {
 //
 //                }

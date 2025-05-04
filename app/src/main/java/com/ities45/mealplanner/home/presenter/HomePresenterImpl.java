@@ -1,7 +1,7 @@
 package com.ities45.mealplanner.home.presenter;
 
 import com.ities45.mealplanner.home.view.IHomeFragmentView;
-import com.ities45.mealplanner.mainactivity.view.ICommunicator;
+import com.ities45.mealplanner.mainactivity.view.IHomeCommunicator;
 import com.ities45.mealplanner.model.pojo.Area;
 import com.ities45.mealplanner.model.pojo.Category;
 import com.ities45.mealplanner.model.pojo.Ingredient;
@@ -17,9 +17,9 @@ import java.util.List;
 public class HomePresenterImpl implements IHomePresenter{
     private IHomeFragmentView view;
     private IMealsRepository repo;
-    private ICommunicator communicator;
+    private IHomeCommunicator communicator;
 
-    public HomePresenterImpl(IHomeFragmentView view, IMealsRepository repo, ICommunicator communicator) {
+    public HomePresenterImpl(IHomeFragmentView view, IMealsRepository repo, IHomeCommunicator communicator) {
         this.view = view;
         this.repo = repo;
         this.communicator = communicator;

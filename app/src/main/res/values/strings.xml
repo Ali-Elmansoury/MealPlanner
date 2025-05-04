@@ -53,5 +53,8 @@
     <string name="view_by_ingredients">View by Ingredients</string>
     <string name="ingredient">Ingredient</string>
     <string name="home">Home</string>
+    <string name="meal_thumbnail">Meal thumbnail</string>
+    <string name="remove">Remove</string>
+    <string name="favorite_meals">Favorite Meals</string>
 
 </resources>

@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
@@ -21,7 +20,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.ities45.mealplanner.R;
 import com.ities45.mealplanner.home.presenter.HomePresenterImpl;
 import com.ities45.mealplanner.home.presenter.IHomePresenter;
-import com.ities45.mealplanner.mainactivity.view.ICommunicator;
+import com.ities45.mealplanner.mainactivity.view.IHomeCommunicator;
 import com.ities45.mealplanner.model.local.db.MealsLocalDataSourceImpl;
 import com.ities45.mealplanner.model.local.networklistener.INetworkStatusListener;
 import com.ities45.mealplanner.model.local.networklistener.NetworkManager;
@@ -51,7 +50,7 @@ public class HomeFragment extends Fragment implements IHomeFragmentView, INetwor
     private View homeContentLayout;
     private View noInternetLayout;
     private Button btnRetry, btnGoToFavorites, btnGoToPlanned;
-    private ICommunicator communicator;
+    private IHomeCommunicator communicator;
     private Meal motd = new Meal();
 
     public HomeFragment() {
@@ -233,6 +232,6 @@ public class HomeFragment extends Fragment implements IHomeFragmentView, INetwor
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        communicator = (ICommunicator) context;
+        communicator = (IHomeCommunicator) context;
     }
 }
