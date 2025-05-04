@@ -53,6 +53,7 @@ dependencies {
     implementation(libs.dotlottie.android.v062)
     implementation (libs.sdp.android)
     implementation (libs.ssp.android)
+    implementation (libs.lottie)
 
 
     implementation(platform(libs.firebase.bom))
