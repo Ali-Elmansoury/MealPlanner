@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class CalendarAdapter extends ListAdapter<String, CalendarAdapter.ViewHolder> {
-    private MutableLiveData<String> selectedDate = new MutableLiveData<>();
+    private String selectedDate;
     private IOnDayClickListener listener;
     private static final long ONE_WEEK_MILLIS = 604800000L;
 
@@ -42,7 +42,7 @@ public class CalendarAdapter extends ListAdapter<String, CalendarAdapter.ViewHol
     public CalendarAdapter(List<String> dates, IOnDayClickListener listener) {
         super(DIFF_CALLBACK);
         submitList(dates);
-        selectedDate.setValue(dates.get(0));
+        //selectedDate.setValue(dates.get(0));
         this.listener = listener;
     }
 
@@ -74,14 +74,16 @@ public class CalendarAdapter extends ListAdapter<String, CalendarAdapter.ViewHol
 
         holder.itemView.setOnClickListener(v -> {
             if (isDateWithinWeek(date)) {
-                selectedDate.setValue(date);
+                // Update selected date and refresh UI
+                selectedDate = date;
+                notifyDataSetChanged();
                 listener.onDayClick(date);
             }
         });
 
         // Highlight using the root view
         holder.itemView.setBackgroundColor(
-                date.equals(selectedDate.getValue()) ? Color.LTGRAY : Color.TRANSPARENT
+                date.equals(selectedDate) ? Color.LTGRAY : Color.TRANSPARENT
         );
     }
 
