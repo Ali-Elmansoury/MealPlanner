@@ -27,7 +27,7 @@ public class FavoriteMealsPresenterImpl implements IFavoriteMealsPresenter{
 
     @Override
     public void removeMealFromFav(Meal meal) {
-        repo.deleteLocalMeal(meal);
+        repo.updateFavStatus(meal.getIdMeal(), false);
     }
 
     @Override

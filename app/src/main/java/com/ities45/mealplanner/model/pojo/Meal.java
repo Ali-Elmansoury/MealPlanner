@@ -67,6 +67,7 @@ public class Meal {
     private String flagUrl;
     private Boolean isFav;
     private Boolean isPlanned;
+    private String plannedDate;
 
     public String getIdMeal() {
         return idMeal;
@@ -517,6 +518,14 @@ public class Meal {
 
     public void setPlanned(Boolean planned) {
         isPlanned = planned;
+    }
+
+    public String getPlannedDate() {
+        return plannedDate;
+    }
+
+    public void setPlannedDate(String plannedDate) {
+        this.plannedDate = plannedDate;
     }
 
     public String getStrIngredient(int index) {

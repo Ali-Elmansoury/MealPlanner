@@ -128,4 +128,9 @@ public class MealsLocalDataSourceImpl implements IMealsLocalDataSource{
             }
         }.start();
     }
+
+    @Override
+    public LiveData<List<Meal>> getPlannedMealsByDate(String date) {
+        return mealsDao.getPlannedMealsByDate(date);
+    }
 }

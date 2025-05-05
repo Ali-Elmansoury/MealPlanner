@@ -56,5 +56,6 @@
     <string name="meal_thumbnail">Meal thumbnail</string>
     <string name="remove">Remove</string>
     <string name="favorite_meals">Favorite Meals</string>
+    <string name="planned_meals">Planned Meals</string>
 
 </resources>

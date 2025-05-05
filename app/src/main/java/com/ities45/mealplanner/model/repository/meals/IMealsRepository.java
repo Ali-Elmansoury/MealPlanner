@@ -59,4 +59,5 @@ public interface IMealsRepository {
     LiveData<List<Meal>> getLocalFavOrPlannedMeals();
     void updateFavStatus(String id, boolean isFav);
     void updatePlannedStatus(String id, boolean isPlanned);
+    LiveData<List<Meal>> getPlannedMealsByDate(String date);
 }

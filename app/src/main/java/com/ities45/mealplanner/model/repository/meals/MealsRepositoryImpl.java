@@ -171,4 +171,9 @@ public class MealsRepositoryImpl implements IMealsRepository{
     public void updatePlannedStatus(String id, boolean isPlanned) {
         mealsLocalDataSource.updatePlannedStatus(id, isPlanned);
     }
+
+    @Override
+    public LiveData<List<Meal>> getPlannedMealsByDate(String date) {
+        return mealsLocalDataSource.getPlannedMealsByDate(date);
+    }
 }

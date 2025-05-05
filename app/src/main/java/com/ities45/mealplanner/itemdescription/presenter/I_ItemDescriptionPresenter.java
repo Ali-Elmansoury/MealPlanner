@@ -10,7 +10,7 @@ public interface I_ItemDescriptionPresenter {
     void processReceivedMealId(String id);
     List<IngredientMeasureItem> getMealIngredients(Meal meal);
     void addMealToFav(Meal meal);
-    void addMealToPlanned(Meal meal);
+    void addMealToPlanned(Meal meal, String date);
 
     void checkConnectionAndUpdateUI();
     void onResume();

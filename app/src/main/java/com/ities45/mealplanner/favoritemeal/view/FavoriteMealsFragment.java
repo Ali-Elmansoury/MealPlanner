@@ -110,7 +110,7 @@ public class FavoriteMealsFragment extends Fragment implements IFavoriteMealsFra
 
     private void showDeleteDialog(Meal meal){
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setMessage("Do you want to remove product ?");
+        builder.setMessage("Do you want to remove meal ?");
         builder.setPositiveButton("Remove", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 presenter.removeMealFromFav(meal);

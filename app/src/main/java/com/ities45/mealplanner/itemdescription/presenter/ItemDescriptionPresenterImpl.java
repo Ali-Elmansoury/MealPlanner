@@ -48,17 +48,50 @@ public class ItemDescriptionPresenterImpl implements I_ItemDescriptionPresenter 
     }
 
     @Override
-    public void addMealToFav(Meal meal) {
-        meal.setFav(true);
-        repo.insertLocalMeal(meal);
-        //set bool is fav
+    public void addMealToFav(Meal fmeal) {
+        LiveData<Meal> favMeal = repo.getLocalMealById(fmeal.getIdMeal());
+        favMeal.observeForever(new Observer<Meal>() {
+            @Override
+            public void onChanged(Meal meal) {
+                if (meal != null && Boolean.TRUE.equals(meal.getFav())) {
+                    view.favMealExists();
+                }
+                // Update or insert
+                if (meal != null) {
+                    repo.updateFavStatus(fmeal.getIdMeal(), true);
+                    view.favMealAdded();
+                } else {
+                    fmeal.setFav(true);
+                    repo.insertLocalMeal(fmeal);
+                    view.favMealAdded();
+                }
+                favMeal.removeObserver(this);
+            }
+        });
     }
 
     @Override
-    public void addMealToPlanned(Meal meal) {
-        meal.setPlanned(true);
-        repo.insertLocalMeal(meal);
-        //set bool is planned
+    public void addMealToPlanned(Meal pmeal, String date) {
+        LiveData<Meal> plannedMeal = repo.getLocalMealById(pmeal.getIdMeal());
+        plannedMeal.observeForever(new Observer<Meal>() {
+            @Override
+            public void onChanged(Meal meal) {
+                    if (meal != null && Boolean.TRUE.equals(meal.getPlanned())) {
+                    view.plannedMealExists();
+                }
+                // Update or insert
+                if (meal != null) {
+                    repo.updatePlannedStatus(pmeal.getIdMeal(), true);
+                    view.plannedMealAdded();
+                } else {
+                    pmeal.setPlanned(true);
+                    pmeal.setPlannedDate(date);
+                    repo.insertLocalMeal(pmeal);
+                    view.plannedMealAdded();
+                }
+                plannedMeal.removeObserver(this);
+            }
+        });
     }
 
     public void checkConnectionAndUpdateUI() {

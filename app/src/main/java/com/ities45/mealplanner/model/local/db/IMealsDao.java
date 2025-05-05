@@ -55,5 +55,8 @@ public interface IMealsDao {
     // Update isPlanned status for a meal by ID
     @Query("UPDATE meals SET isPlanned = :isPlanned WHERE idMeal = :id")
     void updatePlannedStatus(String id, boolean isPlanned);
+
+    @Query("SELECT * FROM meals WHERE isPlanned = 1 AND plannedDate = :date")
+    LiveData<List<Meal>> getPlannedMealsByDate(String date);
 }
 

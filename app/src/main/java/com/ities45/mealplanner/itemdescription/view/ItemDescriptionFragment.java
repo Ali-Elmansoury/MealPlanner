@@ -30,7 +30,12 @@ import com.ities45.mealplanner.model.remote.categories.CategoriesRemoteDataSourc
 import com.ities45.mealplanner.model.remote.ingredients.IngredientsRemoteDataSourceImpl;
 import com.ities45.mealplanner.model.remote.meals.MealsRemoteDataSourceImpl;
 import com.ities45.mealplanner.model.repository.meals.MealsRepositoryImpl;
+import com.ities45.mealplanner.plannedmeal.view.DatePickerDialogFragment;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class ItemDescriptionFragment extends Fragment implements I_ItemDescriptionFragmentView, INetworkStatusListener {
 
@@ -153,14 +158,21 @@ public class ItemDescriptionFragment extends Fragment implements I_ItemDescripti
             @Override
             public void onClick(View v) {
                 presenter.addMealToFav(meal);
-                Toast.makeText(getContext(), "Item added to favorite meals successfully", Toast.LENGTH_SHORT).show();
             }
         });
         addToPlanned.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.addMealToPlanned(meal);
-                Toast.makeText(getContext(), "Item added to planned meals successfully", Toast.LENGTH_SHORT).show();
+                DatePickerDialogFragment dialog = new DatePickerDialogFragment();
+                dialog.setDateSetListener((view, year, month, dayOfMonth) -> {
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                    Calendar selectedDate = Calendar.getInstance();
+                    selectedDate.set(year, month, dayOfMonth);
+                    String dateString = sdf.format(selectedDate.getTime());
+                    presenter.addMealToPlanned(meal, dateString);
+                    Toast.makeText(getContext(), "Meal planned for " + dateString, Toast.LENGTH_SHORT).show();
+                });
+                dialog.show(getParentFragmentManager(), "datePicker");
             }
         });
 
@@ -219,6 +231,26 @@ public class ItemDescriptionFragment extends Fragment implements I_ItemDescripti
     public void showNoInternetLayout() {
         itemDescContentLayout.setVisibility(View.GONE);
         noInternetLayout.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void favMealExists() {
+        Toast.makeText(getContext(), "Item exists in favorite meals", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void favMealAdded() {
+        Toast.makeText(getContext(), "Item added to favorite meals successfully", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void plannedMealAdded() {
+        Toast.makeText(getContext(), "Item added to planned meals successfully", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void plannedMealExists() {
+        Toast.makeText(getContext(), "Item exists in planned meals", Toast.LENGTH_SHORT).show();
     }
 
     @Override

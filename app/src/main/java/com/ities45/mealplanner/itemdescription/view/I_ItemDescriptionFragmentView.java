@@ -8,4 +8,10 @@ public interface I_ItemDescriptionFragmentView {
     void showErrMsg(String errorMsg);
     void showMainContent();
     void showNoInternetLayout();
+
+    void favMealExists();
+    void favMealAdded();
+
+    void plannedMealAdded();
+    void plannedMealExists();
 }

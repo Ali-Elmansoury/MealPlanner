@@ -11,8 +11,9 @@ import com.ities45.mealplanner.favoritemeal.view.FavoriteMealsFragment;
 import com.ities45.mealplanner.home.view.HomeFragment;
 import com.ities45.mealplanner.itemdescription.view.ItemDescriptionFragment;
 import com.ities45.mealplanner.model.pojo.Meal;
+import com.ities45.mealplanner.plannedmeal.view.PlannedMealsFragment;
 
-public class MainActivity extends AppCompatActivity implements IHomeCommunicator, IFavoriteMealCommunicator {
+public class MainActivity extends AppCompatActivity implements IHomeCommunicator, IFavoriteMealCommunicator, IPlannedMealCommunicator {
 
     private BottomNavigationView bottomNav;
 
@@ -40,9 +41,9 @@ public class MainActivity extends AppCompatActivity implements IHomeCommunicator
 //                else if (id == R.id.nav_search){
 //
 //                }
-//                else if (id == R.id.nav_planned) {
-//
-//                }
+                else if (id == R.id.nav_planned) {
+                    selectedFragment = new PlannedMealsFragment();
+                }
                 else if (id == R.id.nav_fav) {
                     selectedFragment = new FavoriteMealsFragment();
                 }
