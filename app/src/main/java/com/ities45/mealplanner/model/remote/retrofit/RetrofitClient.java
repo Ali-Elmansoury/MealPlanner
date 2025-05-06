@@ -31,7 +31,7 @@ public class RetrofitClient {
                     if (request.url().encodedPath().contains("random.php")) {
                         // Disable caching for random meal endpoint
                         return response.newBuilder()
-                                .header("Cache-Control", "no-cache")
+                                .header("Cache-Control", "public, max-age=" + 60 * 60 * 24)
                                 .build();
                     }
 
