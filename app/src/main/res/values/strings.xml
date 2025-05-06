@@ -28,7 +28,7 @@
     <string name="meal_name">Meal Name</string>
     <string name="popular_meals">Popular Breakfast Meals</string>
     <string name="view_by_category">View by Category</string>
-    <string name="view_by_area">View by Area</string>
+    <string name="view_by_area">View by Country</string>
     <string name="category">Category</string>
     <string name="country">Country</string>
     <string name="magic_meal_roulette">Magic Meal Roulette</string>
@@ -61,5 +61,5 @@
     <string name="john_doe">John Doe</string>
     <string name="logout">Logout</string>
     <string name="forgot_password_">Forgot Password</string>
-    <string name="sya7">3aaaaaaaaaaaaaaaaaa</string>
+    <string name="meals">Meals</string>
 </resources>
