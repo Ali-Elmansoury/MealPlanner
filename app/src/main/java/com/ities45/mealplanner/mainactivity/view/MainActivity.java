@@ -12,6 +12,8 @@ import com.ities45.mealplanner.home.view.HomeFragment;
 import com.ities45.mealplanner.itemdescription.view.ItemDescriptionFragment;
 import com.ities45.mealplanner.model.pojo.Meal;
 import com.ities45.mealplanner.plannedmeal.view.PlannedMealsFragment;
+import com.ities45.mealplanner.profile.view.ProfileFragment;
+import com.ities45.mealplanner.search.view.SearchFragment;
 
 public class MainActivity extends AppCompatActivity implements IHomeCommunicator, IFavoriteMealCommunicator, IPlannedMealCommunicator {
 
@@ -38,18 +40,18 @@ public class MainActivity extends AppCompatActivity implements IHomeCommunicator
                 if (id == R.id.nav_home){
                     selectedFragment = new HomeFragment();
                 }
-//                else if (id == R.id.nav_search){
-//
-//                }
+                else if (id == R.id.nav_search){
+                    selectedFragment = new SearchFragment();
+                }
                 else if (id == R.id.nav_planned) {
                     selectedFragment = new PlannedMealsFragment();
                 }
                 else if (id == R.id.nav_fav) {
                     selectedFragment = new FavoriteMealsFragment();
                 }
-//                else if (id == R.id.nav_profile) {
-//
-//                }
+                else if (id == R.id.nav_profile) {
+                    selectedFragment = new ProfileFragment();
+                }
                 if (selectedFragment != null) {
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.fragment_container, selectedFragment)
