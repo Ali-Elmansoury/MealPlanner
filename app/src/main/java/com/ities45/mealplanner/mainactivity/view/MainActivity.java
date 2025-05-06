@@ -14,8 +14,9 @@ import com.ities45.mealplanner.model.pojo.Meal;
 import com.ities45.mealplanner.plannedmeal.view.PlannedMealsFragment;
 import com.ities45.mealplanner.profile.view.ProfileFragment;
 import com.ities45.mealplanner.search.view.SearchFragment;
+import com.ities45.mealplanner.searchmeal.view.SearchMealFragment;
 
-public class MainActivity extends AppCompatActivity implements IHomeCommunicator, IFavoriteMealCommunicator, IPlannedMealCommunicator {
+public class MainActivity extends AppCompatActivity implements IHomeCommunicator, IFavoriteMealCommunicator, IPlannedMealCommunicator, ISearchMealCommunicator, ISearchCommunicator {
 
     private BottomNavigationView bottomNav;
 
@@ -77,5 +78,14 @@ public class MainActivity extends AppCompatActivity implements IHomeCommunicator
                 .replace(R.id.fragment_container, itemDescriptionFragment)
                 .commit();
         itemDescriptionFragment.onMealIdReceived(id);
+    }
+
+    @Override
+    public void onSearchItemClickedSendToSearchMeal(String itemName, String itemType) {
+        SearchMealFragment searchMealFragment = new SearchMealFragment();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, searchMealFragment)
+                .commit();
+        searchMealFragment.onMealItemReceived(itemName, itemType);
     }
 }
