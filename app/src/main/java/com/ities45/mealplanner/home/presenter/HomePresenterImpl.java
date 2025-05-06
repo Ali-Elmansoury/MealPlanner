@@ -150,4 +150,9 @@ public class HomePresenterImpl implements IHomePresenter{
     public void onMealIdClicked(String id) {
         communicator.sendMealIdToItemDescriptionFragment(id);
     }
+
+    @Override
+    public void onCIAItemClicked(String itemName, String itemType) {
+        communicator.onSearchItemClickedSendToSearchMeal(itemName, itemType);
+    }
 }

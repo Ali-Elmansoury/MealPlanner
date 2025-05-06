@@ -154,7 +154,7 @@ public class HomeFragment extends Fragment implements IHomeFragmentView, INetwor
         categoriesAdapter = new CategoriesAdapter(categories, new IOnCategoryClickListener() {
             @Override
             public void onCategoryClick(Category category) {
-                // Handle click event
+                presenter.onCIAItemClicked(category.getStrCategory(), "category");
             }
         });
         rvCategories.setAdapter(categoriesAdapter);
@@ -165,7 +165,7 @@ public class HomeFragment extends Fragment implements IHomeFragmentView, INetwor
         areasAdapter = new AreasAdapter(areas, new IOnAreaClickListener() {
             @Override
             public void onAreaClick(Area area) {
-                // Handle click event
+                presenter.onCIAItemClicked(area.getStrArea(), "area");
             }
         });
         rvAreas.setAdapter(areasAdapter);
@@ -176,7 +176,7 @@ public class HomeFragment extends Fragment implements IHomeFragmentView, INetwor
         ingredientsAdapter = new IngredientsAdapter(ingredients, new IOnIngredientClickListener() {
             @Override
             public void onIngredientClick(Ingredient ingredient) {
-                // Handle click event
+                presenter.onCIAItemClicked(ingredient.getStrIngredient(), "ingredient");
             }
         });
         rvIngredients.setAdapter(ingredientsAdapter);

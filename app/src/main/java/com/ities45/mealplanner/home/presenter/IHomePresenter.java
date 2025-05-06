@@ -15,4 +15,6 @@ public interface IHomePresenter {
 
     void onMealClicked(Meal meal);
     void onMealIdClicked(String id);
+
+    void onCIAItemClicked(String itemName, String itemType);
 }
