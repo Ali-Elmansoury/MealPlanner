@@ -8,7 +8,5 @@ public interface ISearchPresenter {
     void getCategories();
     void getAreas();
     void getIngredients();
-    void onCategoryClicked(Category category);
-    void onIngredientClicked(Ingredient ingredient);
-    void onAreaClicked(Area area);
+    void onSearchItemClickedSendToSearchMeal(String itemName, String itemType);
 }
