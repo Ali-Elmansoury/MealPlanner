@@ -57,5 +57,9 @@
     <string name="remove">Remove</string>
     <string name="favorite_meals">Favorite Meals</string>
     <string name="planned_meals">Planned Meals</string>
-
+    <string name="profile_icon">Profile Icon</string>
+    <string name="john_doe">John Doe</string>
+    <string name="logout">Logout</string>
+    <string name="forgot_password_">Forgot Password</string>
+    <string name="sya7">3aaaaaaaaaaaaaaaaaa</string>
 </resources>
