@@ -60,7 +60,7 @@ public class SearchFragment extends Fragment implements ISearchFragmentView {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        //communicator = (ISearchCommunicator) context;
+        communicator = (ISearchCommunicator) context;
     }
 
     @Override
@@ -160,7 +160,7 @@ public class SearchFragment extends Fragment implements ISearchFragmentView {
                     categoriesAdapter = new CategoriesAdapter(filteredCategories, new IOnCategoryClickListener() {
                         @Override
                         public void onCategoryClick(Category category) {
-                            //communicator.onSearchItemClick(category.getStrCategory(), "category");
+                            presenter.onSearchItemClickedSendToSearchMeal(category.getStrCategory(), "category");
                         }
                     });
                     rvSearch.setAdapter(categoriesAdapter);
@@ -177,7 +177,7 @@ public class SearchFragment extends Fragment implements ISearchFragmentView {
                     ingredientsAdapter = new IngredientsAdapter(filteredIngredients, new IOnIngredientClickListener() {
                         @Override
                         public void onIngredientClick(Ingredient ingredient) {
-                            //communicator.onSearchItemClick(ingredient.getStrIngredient(), "ingredient");
+                            presenter.onSearchItemClickedSendToSearchMeal(ingredient.getStrIngredient(), "ingredient");
                         }
                     });
                     rvSearch.setAdapter(ingredientsAdapter);
@@ -194,7 +194,7 @@ public class SearchFragment extends Fragment implements ISearchFragmentView {
                     areasAdapter = new AreasAdapter(filteredAreas, new IOnAreaClickListener() {
                         @Override
                         public void onAreaClick(Area area) {
-                            //communicator.onSearchItemClick(area.getStrArea(), "area");
+                            presenter.onSearchItemClickedSendToSearchMeal(area.getStrArea(), "area");
                         }
                     });
                     rvSearch.setAdapter(areasAdapter);
@@ -209,7 +209,7 @@ public class SearchFragment extends Fragment implements ISearchFragmentView {
         categoriesAdapter = new CategoriesAdapter(categories, new IOnCategoryClickListener() {
             @Override
             public void onCategoryClick(Category category) {
-                //communicator.onSearchItemClick(category.getStrCategory(), "category");
+                presenter.onSearchItemClickedSendToSearchMeal(category.getStrCategory(), "category");
             }
         });
         rvSearch.setAdapter(categoriesAdapter);
@@ -221,7 +221,7 @@ public class SearchFragment extends Fragment implements ISearchFragmentView {
         areasAdapter = new AreasAdapter(areas, new IOnAreaClickListener() {
             @Override
             public void onAreaClick(Area area) {
-                //communicator.onSearchItemClick(area.getStrArea(), "area");
+                presenter.onSearchItemClickedSendToSearchMeal(area.getStrArea(), "area");
             }
         });
         rvSearch.setAdapter(areasAdapter);
@@ -233,7 +233,7 @@ public class SearchFragment extends Fragment implements ISearchFragmentView {
         ingredientsAdapter = new IngredientsAdapter(ingredients, new IOnIngredientClickListener() {
             @Override
             public void onIngredientClick(Ingredient ingredient) {
-                //communicator.onSearchItemClick(ingredient.getStrIngredient(), "ingredient");
+                presenter.onSearchItemClickedSendToSearchMeal(ingredient.getStrIngredient(), "ingredient");
             }
         });
         rvSearch.setAdapter(ingredientsAdapter);

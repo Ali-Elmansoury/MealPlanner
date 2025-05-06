@@ -69,17 +69,7 @@ public class SearchPresenterImpl implements ISearchPresenter{
     }
 
     @Override
-    public void onCategoryClicked(Category category) {
-        communicator.sendCategoryToSearchMealFragment(category);
-    }
-
-    @Override
-    public void onIngredientClicked(Ingredient ingredient) {
-        communicator.sendIngredientToSearchMealFragment(ingredient);
-    }
-
-    @Override
-    public void onAreaClicked(Area area) {
-        communicator.sendAreaToSearchMealFragment(area);
+    public void onSearchItemClickedSendToSearchMeal(String itemName, String itemType) {
+        communicator.onSearchItemClickedSendToSearchMeal(itemName, itemType);
     }
 }
