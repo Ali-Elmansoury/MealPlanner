@@ -77,11 +77,11 @@ public class ItemDescriptionPresenterImpl implements I_ItemDescriptionPresenter 
         plannedMeal.observeForever(new Observer<Meal>() {
             @Override
             public void onChanged(Meal meal) {
-                    if (meal != null && Boolean.TRUE.equals(meal.getPlanned())) {
+                if (meal != null && Boolean.TRUE.equals(meal.getPlanned())) {
                     view.plannedMealExists();
                 }
                 // Update or insert
-                if (meal != null) {
+                else if (meal != null) {
                     repo.updatePlannedStatus(pmeal.getIdMeal(), true);
                     view.plannedMealAdded();
                 } else {
