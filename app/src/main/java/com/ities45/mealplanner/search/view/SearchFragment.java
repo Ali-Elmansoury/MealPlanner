@@ -34,6 +34,7 @@ import com.ities45.mealplanner.model.remote.meals.MealsRemoteDataSourceImpl;
 import com.ities45.mealplanner.model.repository.meals.MealsRepositoryImpl;
 import com.ities45.mealplanner.search.presenter.ISearchPresenter;
 import com.ities45.mealplanner.search.presenter.SearchPresenterImpl;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SearchFragment extends Fragment implements ISearchFragmentView {
@@ -45,6 +46,12 @@ public class SearchFragment extends Fragment implements ISearchFragmentView {
     private ISearchCommunicator communicator;
     private SearchView searchView;
     private ChipGroup chipGroup;
+
+    // Lists to store original data for filtering
+    private List<Category> originalCategories;
+    private List<Area> originalAreas;
+    private List<Ingredient> originalIngredients;
+    private String currentChip = "Category"; // Track the currently selected chip
 
     public SearchFragment() {
         // Required empty public constructor
@@ -84,6 +91,7 @@ public class SearchFragment extends Fragment implements ISearchFragmentView {
         rvSearch.setHasFixedSize(true);
         rvSearch.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
+        // Expand SearchView by default to show hint
         searchView.onActionViewExpanded();
         searchView.setQueryHint("Search by Category");
 
@@ -92,6 +100,7 @@ public class SearchFragment extends Fragment implements ISearchFragmentView {
             Chip selectedChip = group.findViewById(checkedId);
             if (selectedChip != null) {
                 String selectedText = selectedChip.getText().toString();
+                currentChip = selectedText; // Update current chip
                 // Update SearchView hint based on selected chip
                 searchView.setQueryHint("Search by " + selectedText);
 
@@ -107,6 +116,22 @@ public class SearchFragment extends Fragment implements ISearchFragmentView {
                         presenter.getAreas();
                         break;
                 }
+                // Clear search query to show all items when chip changes
+                searchView.setQuery("", false);
+            }
+        });
+
+        // Set up SearchView query listener for filtering
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false; // Not handling submit action
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterItems(newText);
+                return true;
             }
         });
 
@@ -120,8 +145,67 @@ public class SearchFragment extends Fragment implements ISearchFragmentView {
         }
     }
 
+    // Filter items based on the search query
+    private void filterItems(String query) {
+        query = query.toLowerCase().trim();
+        switch (currentChip) {
+            case "Category":
+                if (originalCategories != null) {
+                    List<Category> filteredCategories = new ArrayList<>();
+                    for (Category category : originalCategories) {
+                        if (category.getStrCategory().toLowerCase().contains(query)) {
+                            filteredCategories.add(category);
+                        }
+                    }
+                    categoriesAdapter = new CategoriesAdapter(filteredCategories, new IOnCategoryClickListener() {
+                        @Override
+                        public void onCategoryClick(Category category) {
+                            //communicator.onSearchItemClick(category.getStrCategory(), "category");
+                        }
+                    });
+                    rvSearch.setAdapter(categoriesAdapter);
+                }
+                break;
+            case "Ingredient":
+                if (originalIngredients != null) {
+                    List<Ingredient> filteredIngredients = new ArrayList<>();
+                    for (Ingredient ingredient : originalIngredients) {
+                        if (ingredient.getStrIngredient().toLowerCase().contains(query)) {
+                            filteredIngredients.add(ingredient);
+                        }
+                    }
+                    ingredientsAdapter = new IngredientsAdapter(filteredIngredients, new IOnIngredientClickListener() {
+                        @Override
+                        public void onIngredientClick(Ingredient ingredient) {
+                            //communicator.onSearchItemClick(ingredient.getStrIngredient(), "ingredient");
+                        }
+                    });
+                    rvSearch.setAdapter(ingredientsAdapter);
+                }
+                break;
+            case "Country":
+                if (originalAreas != null) {
+                    List<Area> filteredAreas = new ArrayList<>();
+                    for (Area area : originalAreas) {
+                        if (area.getStrArea().toLowerCase().contains(query)) {
+                            filteredAreas.add(area);
+                        }
+                    }
+                    areasAdapter = new AreasAdapter(filteredAreas, new IOnAreaClickListener() {
+                        @Override
+                        public void onAreaClick(Area area) {
+                            //communicator.onSearchItemClick(area.getStrArea(), "area");
+                        }
+                    });
+                    rvSearch.setAdapter(areasAdapter);
+                }
+                break;
+        }
+    }
+
     @Override
     public void showCategories(List<Category> categories) {
+        originalCategories = new ArrayList<>(categories); // Store original list
         categoriesAdapter = new CategoriesAdapter(categories, new IOnCategoryClickListener() {
             @Override
             public void onCategoryClick(Category category) {
@@ -133,6 +217,7 @@ public class SearchFragment extends Fragment implements ISearchFragmentView {
 
     @Override
     public void showAreas(List<Area> areas) {
+        originalAreas = new ArrayList<>(areas); // Store original list
         areasAdapter = new AreasAdapter(areas, new IOnAreaClickListener() {
             @Override
             public void onAreaClick(Area area) {
@@ -144,6 +229,7 @@ public class SearchFragment extends Fragment implements ISearchFragmentView {
 
     @Override
     public void showIngredients(List<Ingredient> ingredients) {
+        originalIngredients = new ArrayList<>(ingredients); // Store original list
         ingredientsAdapter = new IngredientsAdapter(ingredients, new IOnIngredientClickListener() {
             @Override
             public void onIngredientClick(Ingredient ingredient) {
