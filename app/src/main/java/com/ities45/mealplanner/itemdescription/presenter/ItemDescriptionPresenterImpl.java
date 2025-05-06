@@ -57,7 +57,7 @@ public class ItemDescriptionPresenterImpl implements I_ItemDescriptionPresenter 
                     view.favMealExists();
                 }
                 // Update or insert
-                if (meal != null) {
+                else if (meal != null) {
                     repo.updateFavStatus(fmeal.getIdMeal(), true);
                     view.favMealAdded();
                 } else {
