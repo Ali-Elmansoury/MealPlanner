@@ -197,6 +197,10 @@ public class ItemDescriptionFragment extends Fragment implements I_ItemDescripti
         } else {
             Toast.makeText(getContext(), "No YouTube video available", Toast.LENGTH_SHORT).show();
         }
+
+        presenter.checkFavMeal(meal, isFav -> {
+            favBtn.setImageResource(isFav ? R.drawable.add_to_fav : R.drawable.fav);
+        });
     }
 
     // Method to extract video ID from YouTube URL

@@ -12,6 +12,7 @@ import com.ities45.mealplanner.model.remote.meals.IMealsNetworkCallback;
 import com.ities45.mealplanner.model.repository.meals.IMealsRepository;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class ItemDescriptionPresenterImpl implements I_ItemDescriptionPresenter {
     private I_ItemDescriptionFragmentView view;
@@ -112,5 +113,18 @@ public class ItemDescriptionPresenterImpl implements I_ItemDescriptionPresenter 
     @Override
     public void onPause() {
         repo.unregisterNetworkCallback();
+    }
+
+    @Override
+    public void checkFavMeal(Meal fMeal, Consumer<Boolean> callback) {
+        LiveData<Meal> favMeal = repo.getLocalMealById(fMeal.getIdMeal());
+        favMeal.observeForever(new Observer<Meal>() {
+            @Override
+            public void onChanged(Meal meal) {
+                boolean isFav = meal != null && Boolean.TRUE.equals(meal.getFav());
+                callback.accept(isFav);
+                favMeal.removeObserver(this); // Ensure observer is removed
+            }
+        });
     }
 }
