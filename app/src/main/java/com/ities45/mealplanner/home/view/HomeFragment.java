@@ -283,16 +283,4 @@ public class HomeFragment extends Fragment implements IHomeFragmentView, INetwor
         userID = sessionManager.getUserId();
         userName = sessionManager.getUserName();
     }
-
-
-    @Override
-    public boolean handleBackPress() {
-        // If no-internet layout is visible, attempt to retry the connection
-        if (noInternetLayout.getVisibility() == View.VISIBLE) {
-            presenter.checkConnectionAndUpdateUI(); // Retry connection
-            return true; // Handled by retrying
-        }
-        // No sub-state to handle, let MainActivity finish the activity
-        return false;
-    }
 }
