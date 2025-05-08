@@ -127,4 +127,21 @@ public class MainActivity extends AppCompatActivity implements IHomeCommunicator
         searchMealFragment.onMealItemReceived(itemName, itemType);
     }
 
+    @Override
+    public void onBackPressed() {
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+
+        // If current fragment is not home, navigate to home
+        if (!(currentFragment instanceof HomeFragment)) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new HomeFragment())
+                    .commit();
+            // Also update the selected item in the bottom nav
+            bottomNav.setSelectedItemId(R.id.nav_home);
+        } else {
+            // If already on home, use default behavior (exit app)
+            super.onBackPressed();
+        }
+    }
+
 }
