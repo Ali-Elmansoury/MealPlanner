@@ -1,6 +1,7 @@
 package com.ities45.mealplanner.home.presenter;
 
 import com.ities45.mealplanner.model.pojo.Meal;
+import com.ities45.mealplanner.model.remote.firebase.firestore.IFirestoreCallback;
 
 public interface IHomePresenter {
     void getMealOfTheDay();
@@ -17,4 +18,9 @@ public interface IHomePresenter {
     void onMealIdClicked(String id);
 
     void onCIAItemClicked(String itemName, String itemType);
+
+    void syncFavoriteMeals(String userId, IFirestoreCallback.ILoadMealsCallback callback);
+
+    void syncPlannedMeals(String userId, IFirestoreCallback.ILoadMealsCallback callback);
+
 }

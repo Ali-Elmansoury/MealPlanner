@@ -1,8 +1,10 @@
 package com.ities45.mealplanner.itemdescription.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,13 +22,17 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.ities45.mealplanner.R;
 import com.ities45.mealplanner.itemdescription.presenter.I_ItemDescriptionPresenter;
 import com.ities45.mealplanner.itemdescription.presenter.ItemDescriptionPresenterImpl;
+import com.ities45.mealplanner.login.view.Login;
 import com.ities45.mealplanner.model.local.db.MealsLocalDataSourceImpl;
 import com.ities45.mealplanner.model.local.networklistener.INetworkStatusListener;
 import com.ities45.mealplanner.model.local.networklistener.NetworkManager;
+import com.ities45.mealplanner.model.local.sessionmanager.SessionManager;
 import com.ities45.mealplanner.model.pojo.IngredientMeasureItem;
 import com.ities45.mealplanner.model.pojo.Meal;
 import com.ities45.mealplanner.model.remote.areas.AreasRemoteDataSourceImpl;
 import com.ities45.mealplanner.model.remote.categories.CategoriesRemoteDataSourceImpl;
+import com.ities45.mealplanner.model.remote.firebase.firestore.FirestoreClient;
+import com.ities45.mealplanner.model.remote.firebase.firestore.IFirestoreCallback;
 import com.ities45.mealplanner.model.remote.ingredients.IngredientsRemoteDataSourceImpl;
 import com.ities45.mealplanner.model.remote.meals.MealsRemoteDataSourceImpl;
 import com.ities45.mealplanner.model.repository.meals.MealsRepositoryImpl;
@@ -52,6 +58,9 @@ public class ItemDescriptionFragment extends Fragment implements I_ItemDescripti
     private Meal pendingMeal; // Store meal until presenter is initialized
     private String pendingId;
     private boolean isViewReady = false; // Track view initialization
+    private SessionManager sessionManager;
+    private String userID;
+    private boolean isGuest;
 
     public ItemDescriptionFragment() {
         // Required empty public constructor
@@ -66,8 +75,12 @@ public class ItemDescriptionFragment extends Fragment implements I_ItemDescripti
                 AreasRemoteDataSourceImpl.getInstance(getContext()),
                 IngredientsRemoteDataSourceImpl.getInstance(getContext()),
                 NetworkManager.getInstance(getContext(), this),
-                MealsLocalDataSourceImpl.getInstance(getContext())
+                MealsLocalDataSourceImpl.getInstance(getContext()),
+                FirestoreClient.getInstance()
         ));
+        sessionManager = new SessionManager(getContext());
+        userID = sessionManager.getUserId();
+        isGuest = sessionManager.isGuest();
     }
 
     @Override
@@ -80,6 +93,36 @@ public class ItemDescriptionFragment extends Fragment implements I_ItemDescripti
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        presenter.syncFavoriteMeals(userID, new IFirestoreCallback.ILoadMealsCallback() {
+            @Override
+            public void onMealsLoaded(List<Meal> meals, IFirestoreCallback.MealType mealType) {
+                for (Meal meal : meals){
+                    presenter.addMealToFav(meal);
+                }
+                //Toast.makeText(getContext(), "fav meals synced", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onDataNotAvailable(IFirestoreCallback.MealType mealType) {
+                Toast.makeText(getContext(), "fav sync is sad", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        presenter.syncPlannedMeals(userID, new IFirestoreCallback.ILoadMealsCallback() {
+            @Override
+            public void onMealsLoaded(List<Meal> meals, IFirestoreCallback.MealType mealType) {
+                for (Meal meal : meals){
+                    presenter.addMealToPlanned(meal, meal.getPlannedDate());
+                }
+                //Toast.makeText(getContext(), "planned meals synced", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onDataNotAvailable(IFirestoreCallback.MealType mealType) {
+                Toast.makeText(getContext(), "planned sync is sad", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         itemDescContentLayout = view.findViewById(R.id.itemDescContentLayout);
         noInternetLayout = view.findViewById(R.id.noInternetLayout);
@@ -105,6 +148,15 @@ public class ItemDescriptionFragment extends Fragment implements I_ItemDescripti
         // Configure WebView for YouTube video playback
         ytVideo.getSettings().setJavaScriptEnabled(true);
         ytVideo.setWebChromeClient(new WebChromeClient()); // Enable video playback
+
+        // Disable buttons for guest users
+        if (isGuest) {
+            favBtn.setEnabled(false);
+            addToPlanned.setEnabled(false);
+            // Optional: Change appearance to indicate disabled state
+            favBtn.setAlpha(0.5f);
+            addToPlanned.setAlpha(0.5f);
+        }
 
         isViewReady = true; // Views are now ready
 
@@ -154,15 +206,21 @@ public class ItemDescriptionFragment extends Fragment implements I_ItemDescripti
         ingredients = presenter.getMealIngredients(meal);
         itemIngredientsAdapter = new ItemIngredientsAdapter(ingredients);
         rvIngredients.setAdapter(itemIngredientsAdapter);
-        favBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+
+        // Handle favorite button click
+        favBtn.setOnClickListener(v -> {
+            if (isGuest) {
+                showGuestAlertDialog();
+            } else {
                 presenter.addMealToFav(meal);
             }
         });
-        addToPlanned.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+
+        // Handle add to planned button click
+        addToPlanned.setOnClickListener(v -> {
+            if (isGuest) {
+                showGuestAlertDialog();
+            } else {
                 DatePickerDialogFragment dialog = new DatePickerDialogFragment();
                 dialog.setDateSetListener((view, year, month, dayOfMonth) -> {
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
@@ -201,6 +259,20 @@ public class ItemDescriptionFragment extends Fragment implements I_ItemDescripti
         presenter.checkFavMeal(meal, isFav -> {
             favBtn.setImageResource(isFav ? R.drawable.add_to_fav : R.drawable.fav);
         });
+    }
+
+    private void showGuestAlertDialog() {
+        new AlertDialog.Builder(requireContext())
+                .setTitle("Guest User")
+                .setMessage("You are a guest. Please log in to use this feature.")
+                .setPositiveButton("Login", (dialog, which) -> {
+                    // Navigate to LoginActivity
+                    Intent intent = new Intent(getContext(), Login.class); // Replace with your LoginActivity
+                    startActivity(intent);
+                })
+                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
+                .setCancelable(true)
+                .show();
     }
 
     // Method to extract video ID from YouTube URL
@@ -255,6 +327,16 @@ public class ItemDescriptionFragment extends Fragment implements I_ItemDescripti
     @Override
     public void plannedMealExists() {
         Toast.makeText(getContext(), "Item exists in planned meals", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void fbMealAddFailed(String msg) {
+        Toast.makeText(getContext(), "Error in add meal to firestore, " + msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void fbMealAdded() {
+        Toast.makeText(getContext(), "Meal added to firestore", Toast.LENGTH_SHORT).show();
     }
 
     @Override

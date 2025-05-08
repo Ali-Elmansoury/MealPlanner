@@ -8,6 +8,7 @@ import com.ities45.mealplanner.model.pojo.Ingredient;
 import com.ities45.mealplanner.model.pojo.Meal;
 import com.ities45.mealplanner.model.remote.areas.IAreasNetworkCallback;
 import com.ities45.mealplanner.model.remote.categories.ICategoriesNetworkCallback;
+import com.ities45.mealplanner.model.remote.firebase.firestore.IFirestoreCallback;
 import com.ities45.mealplanner.model.remote.ingredients.I_IngredientsNetworkCallback;
 import com.ities45.mealplanner.model.remote.meals.IMealsNetworkCallback;
 import com.ities45.mealplanner.model.repository.meals.IMealsRepository;
@@ -154,5 +155,15 @@ public class HomePresenterImpl implements IHomePresenter{
     @Override
     public void onCIAItemClicked(String itemName, String itemType) {
         communicator.onSearchItemClickedSendToSearchMeal(itemName, itemType);
+    }
+
+    @Override
+    public void syncFavoriteMeals(String userId, IFirestoreCallback.ILoadMealsCallback callback) {
+        repo.syncFavoriteMeals(userId, callback);
+    }
+
+    @Override
+    public void syncPlannedMeals(String userId, IFirestoreCallback.ILoadMealsCallback callback) {
+        repo.syncPlannedMeals(userId, callback);
     }
 }

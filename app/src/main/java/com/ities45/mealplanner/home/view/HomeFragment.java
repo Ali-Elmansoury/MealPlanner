@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
@@ -24,12 +25,15 @@ import com.ities45.mealplanner.mainactivity.view.IHomeCommunicator;
 import com.ities45.mealplanner.model.local.db.MealsLocalDataSourceImpl;
 import com.ities45.mealplanner.model.local.networklistener.INetworkStatusListener;
 import com.ities45.mealplanner.model.local.networklistener.NetworkManager;
+import com.ities45.mealplanner.model.local.sessionmanager.SessionManager;
 import com.ities45.mealplanner.model.pojo.Area;
 import com.ities45.mealplanner.model.pojo.Category;
 import com.ities45.mealplanner.model.pojo.Ingredient;
 import com.ities45.mealplanner.model.pojo.Meal;
 import com.ities45.mealplanner.model.remote.areas.AreasRemoteDataSourceImpl;
 import com.ities45.mealplanner.model.remote.categories.CategoriesRemoteDataSourceImpl;
+import com.ities45.mealplanner.model.remote.firebase.firestore.FirestoreClient;
+import com.ities45.mealplanner.model.remote.firebase.firestore.IFirestoreCallback;
 import com.ities45.mealplanner.model.remote.ingredients.IngredientsRemoteDataSourceImpl;
 import com.ities45.mealplanner.model.remote.meals.MealsRemoteDataSourceImpl;
 import com.ities45.mealplanner.model.repository.meals.MealsRepositoryImpl;
@@ -52,29 +56,70 @@ public class HomeFragment extends Fragment implements IHomeFragmentView, INetwor
     private Button btnRetry, btnGoToFavorites, btnGoToPlanned;
     private IHomeCommunicator communicator;
     private Meal motd = new Meal();
+    private TextView tvGreetings;
+    private SessionManager sessionManager;
+    private String userID, userName;
 
     public HomeFragment() {
         // Required empty public constructor
     }
+
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
         return inflater.inflate(R.layout.home_no_net_fragment, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        tvGreetings = view.findViewById(R.id.txtGreeting);
+        if (sessionManager.isGuest()){
+            tvGreetings.setText("Hello Guest");
+        }
+        else if(sessionManager.isLoggedIn()){
+            tvGreetings.setText("Hello " + sessionManager.getUserName());
+        }
+        else {
 
+        }
         initializeViews(view);
         setupRecyclerViews();
         setupPresenter();
         setupListeners();
 
+
         presenter.checkConnectionAndUpdateUI();
+
+//        presenter.syncFavoriteMeals(sessionManager.getUserId(), new IFirestoreCallback.ILoadMealsCallback() {
+//            @Override
+//            public void onMealsLoaded(List<Meal> meals, IFirestoreCallback.MealType mealType) {
+//                Toast.makeText(getContext(), "Favorite meals synced successfully", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onDataNotAvailable(IFirestoreCallback.MealType mealType) {
+//                Toast.makeText(getContext(), "Favorite meals failed to sync", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+
+//        presenter.syncPlannedMeals(sessionManager.getUserId(), new IFirestoreCallback.ILoadMealsCallback() {
+//            @Override
+//            public void onMealsLoaded(List<Meal> meals, IFirestoreCallback.MealType mealType) {
+//                Toast.makeText(getContext(), "Planned meals synced successfully", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onDataNotAvailable(IFirestoreCallback.MealType mealType) {
+//                Toast.makeText(getContext(), "Planned meals failed to sync", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+
     }
 
     private void initializeViews(View view) {
@@ -118,7 +163,8 @@ public class HomeFragment extends Fragment implements IHomeFragmentView, INetwor
                         AreasRemoteDataSourceImpl.getInstance(getContext()),
                         IngredientsRemoteDataSourceImpl.getInstance(getContext()),
                         NetworkManager.getInstance(getContext(), this),
-                        MealsLocalDataSourceImpl.getInstance(getContext())
+                        MealsLocalDataSourceImpl.getInstance(getContext()),
+                        FirestoreClient.getInstance()
                 ), communicator);
     }
 
@@ -233,5 +279,20 @@ public class HomeFragment extends Fragment implements IHomeFragmentView, INetwor
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         communicator = (IHomeCommunicator) context;
+        sessionManager = new SessionManager(getContext());
+        userID = sessionManager.getUserId();
+        userName = sessionManager.getUserName();
+    }
+
+
+    @Override
+    public boolean handleBackPress() {
+        // If no-internet layout is visible, attempt to retry the connection
+        if (noInternetLayout.getVisibility() == View.VISIBLE) {
+            presenter.checkConnectionAndUpdateUI(); // Retry connection
+            return true; // Handled by retrying
+        }
+        // No sub-state to handle, let MainActivity finish the activity
+        return false;
     }
 }

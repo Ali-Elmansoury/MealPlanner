@@ -14,4 +14,7 @@ public interface I_ItemDescriptionFragmentView {
 
     void plannedMealAdded();
     void plannedMealExists();
+
+    void fbMealAddFailed(String msg);
+    void fbMealAdded();
 }

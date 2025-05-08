@@ -1,5 +1,7 @@
 package com.ities45.mealplanner.itemdescription.presenter;
 
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
@@ -8,6 +10,7 @@ import androidx.lifecycle.Observer;
 import com.ities45.mealplanner.itemdescription.view.I_ItemDescriptionFragmentView;
 import com.ities45.mealplanner.model.pojo.IngredientMeasureItem;
 import com.ities45.mealplanner.model.pojo.Meal;
+import com.ities45.mealplanner.model.remote.firebase.firestore.IFirestoreCallback;
 import com.ities45.mealplanner.model.remote.meals.IMealsNetworkCallback;
 import com.ities45.mealplanner.model.repository.meals.IMealsRepository;
 
@@ -60,10 +63,32 @@ public class ItemDescriptionPresenterImpl implements I_ItemDescriptionPresenter 
                 // Update or insert
                 else if (meal != null) {
                     repo.updateFavStatus(fmeal.getIdMeal(), true);
+                    repo.addFavoriteMealFB(fmeal, new IFirestoreCallback.IOperationCallback() {
+                        @Override
+                        public void onSuccess() {
+                            //view.fbMealAdded();
+                        }
+
+                        @Override
+                        public void onError(String error) {
+                            //view.fbMealAddFailed(error);
+                        }
+                    });
                     view.favMealAdded();
                 } else {
                     fmeal.setFav(true);
                     repo.insertLocalMeal(fmeal);
+                    repo.addFavoriteMealFB(fmeal, new IFirestoreCallback.IOperationCallback() {
+                        @Override
+                        public void onSuccess() {
+                            //view.fbMealAdded();
+                        }
+
+                        @Override
+                        public void onError(String error) {
+                            //view.fbMealAddFailed(error);
+                        }
+                    });
                     view.favMealAdded();
                 }
                 favMeal.removeObserver(this);
@@ -83,11 +108,33 @@ public class ItemDescriptionPresenterImpl implements I_ItemDescriptionPresenter 
                 // Update or insert
                 else if (meal != null) {
                     repo.updatePlannedStatus(pmeal.getIdMeal(), true);
+                    repo.addPlannedMealFB(pmeal, new IFirestoreCallback.IOperationCallback() {
+                        @Override
+                        public void onSuccess() {
+                            view.fbMealAdded();
+                        }
+
+                        @Override
+                        public void onError(String error) {
+                            view.fbMealAddFailed(error);
+                        }
+                    });
                     view.plannedMealAdded();
                 } else {
                     pmeal.setPlanned(true);
                     pmeal.setPlannedDate(date);
                     repo.insertLocalMeal(pmeal);
+                    repo.addPlannedMealFB(pmeal, new IFirestoreCallback.IOperationCallback() {
+                        @Override
+                        public void onSuccess() {
+                            view.fbMealAdded();
+                        }
+
+                        @Override
+                        public void onError(String error) {
+                            view.fbMealAddFailed(error);
+                        }
+                    });
                     view.plannedMealAdded();
                 }
                 plannedMeal.removeObserver(this);
@@ -126,5 +173,15 @@ public class ItemDescriptionPresenterImpl implements I_ItemDescriptionPresenter 
                 favMeal.removeObserver(this); // Ensure observer is removed
             }
         });
+    }
+
+    @Override
+    public void syncFavoriteMeals(String userId, IFirestoreCallback.ILoadMealsCallback callback) {
+        repo.syncFavoriteMeals(userId, callback);
+    }
+
+    @Override
+    public void syncPlannedMeals(String userId, IFirestoreCallback.ILoadMealsCallback callback) {
+        repo.syncPlannedMeals(userId, callback);
     }
 }

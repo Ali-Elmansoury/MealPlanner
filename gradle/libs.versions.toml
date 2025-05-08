@@ -1,8 +1,12 @@
 [versions]
 agp = "8.9.2"
+credentials = "1.5.0"
 dotlottieAndroidVersion = "0.6.2"
+firebaseAuth = "23.2.0"
 firebaseBom = "33.13.0"
+firebaseFirestore = "25.1.4"
 glide = "4.14.2"
+googleid = "1.1.1"
 gson = "2.13.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -13,6 +17,7 @@ material = "1.12.0"
 activity = "1.10.1"
 constraintlayout = "2.2.1"
 okhttp = "4.12.0"
+playServicesAuth = "21.3.0"
 retrofit = "2.11.0"
 roomRuntime = "2.7.1"
 sdpAndroid = "1.1.1"
@@ -21,10 +26,15 @@ sspAndroid = "1.1.1"
 [libraries]
 compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
+credentials = { module = "androidx.credentials:credentials", version.ref = "credentials" }
+credentials-play-services-auth = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "credentials" }
 dotlottie-android-v062 = { module = "com.github.LottieFiles:dotlottie-android", version.ref = "dotlottieAndroidVersion" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
+firebase-auth = { module = "com.google.firebase:firebase-auth", version.ref = "firebaseAuth" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-firestore = { module = "com.google.firebase:firebase-firestore", version.ref = "firebaseFirestore" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
+googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleid" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -35,6 +45,7 @@ material = { group = "com.google.android.material", name = "material", version.r
 activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
+play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }

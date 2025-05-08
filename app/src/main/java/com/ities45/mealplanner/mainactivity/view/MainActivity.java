@@ -1,36 +1,55 @@
 package com.ities45.mealplanner.mainactivity.view;
 
+import android.content.Intent;
 import android.os.Bundle;
-
+import android.widget.Toast;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ities45.mealplanner.R;
 import com.ities45.mealplanner.favoritemeal.view.FavoriteMealsFragment;
 import com.ities45.mealplanner.home.view.HomeFragment;
 import com.ities45.mealplanner.itemdescription.view.ItemDescriptionFragment;
-import com.ities45.mealplanner.model.pojo.Meal;
+import com.ities45.mealplanner.login.view.Login;
+import com.ities45.mealplanner.model.local.sessionmanager.SessionManager;
 import com.ities45.mealplanner.plannedmeal.view.PlannedMealsFragment;
 import com.ities45.mealplanner.profile.view.ProfileFragment;
 import com.ities45.mealplanner.search.view.SearchFragment;
 import com.ities45.mealplanner.searchmeal.view.SearchMealFragment;
+import com.ities45.mealplanner.model.pojo.Meal;
 
 public class MainActivity extends AppCompatActivity implements IHomeCommunicator, IFavoriteMealCommunicator, IPlannedMealCommunicator, ISearchMealCommunicator, ISearchCommunicator {
 
     private BottomNavigationView bottomNav;
+    private SessionManager sessionManager;
+    private String userId;
+    private String userEmail;
+    private String userName;
+    private boolean isGuest;
+    private boolean isLoggedIn;
+    private Fragment homeFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        sessionManager = new SessionManager(this);
+
+        userId = sessionManager.getUserId();
+        userEmail = sessionManager.getUserEmail();
+        userName = sessionManager.getUserName();
+        isGuest = sessionManager.isGuest();
+        isLoggedIn = sessionManager.isLoggedIn();
+
         bottomNav = findViewById(R.id.bottomNavigationView);
         bottomNav.setOnItemSelectedListener(navListener);
 
         // Load initial fragment
+        homeFragment = new HomeFragment();
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, new HomeFragment())
+                .replace(R.id.fragment_container, homeFragment)
                 .commit();
     }
 
@@ -38,21 +57,26 @@ public class MainActivity extends AppCompatActivity implements IHomeCommunicator
             item -> {
                 Fragment selectedFragment = null;
                 int id = item.getItemId();
-                if (id == R.id.nav_home){
+
+                // Check if user is guest and trying to access restricted fragments
+                if (isGuest && (id == R.id.nav_planned || id == R.id.nav_fav)) {
+                    showGuestAlertDialog();
+                    return false; // Prevent navigation
+                }
+
+                // Proceed with fragment selection for non-restricted fragments or logged-in users
+                if (id == R.id.nav_home) {
                     selectedFragment = new HomeFragment();
-                }
-                else if (id == R.id.nav_search){
+                } else if (id == R.id.nav_search) {
                     selectedFragment = new SearchFragment();
-                }
-                else if (id == R.id.nav_planned) {
+                } else if (id == R.id.nav_planned) {
                     selectedFragment = new PlannedMealsFragment();
-                }
-                else if (id == R.id.nav_fav) {
+                } else if (id == R.id.nav_fav) {
                     selectedFragment = new FavoriteMealsFragment();
-                }
-                else if (id == R.id.nav_profile) {
+                } else if (id == R.id.nav_profile) {
                     selectedFragment = new ProfileFragment();
                 }
+
                 if (selectedFragment != null) {
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.fragment_container, selectedFragment)
@@ -61,6 +85,20 @@ public class MainActivity extends AppCompatActivity implements IHomeCommunicator
                 }
                 return false; // Prevent navigation if fragment not implemented
             };
+
+    private void showGuestAlertDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Guest User")
+                .setMessage("You are a guest. Please log in to use this feature.")
+                .setPositiveButton("Login", (dialog, which) -> {
+                    // Navigate to LoginActivity
+                    Intent intent = new Intent(MainActivity.this, Login.class); // Replace with your LoginActivity
+                    startActivity(intent);
+                })
+                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
+                .setCancelable(true)
+                .show();
+    }
 
     @Override
     public void sendMealToItemDescriptionFragment(Meal meal) {
@@ -88,4 +126,61 @@ public class MainActivity extends AppCompatActivity implements IHomeCommunicator
                 .commit();
         searchMealFragment.onMealItemReceived(itemName, itemType);
     }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+
+        // Check if the current fragment can handle the back press
+        if (currentFragment instanceof HomeFragment) {
+            HomeFragment homeFragment = (HomeFragment) currentFragment;
+            if (!homeFragment.handleBackPress()) {
+                finish(); // Exit the app if home fragment cannot handle back press
+            }
+        } else if (currentFragment instanceof SearchFragment) {
+            SearchFragment searchFragment = (SearchFragment) currentFragment;
+            if (!searchFragment.handleBackPress()) {
+                navigateToHome(); // Navigate to home if search fragment cannot handle back press
+            }
+        } else if (currentFragment instanceof PlannedMealsFragment) {
+            PlannedMealsFragment plannedFragment = (PlannedMealsFragment) currentFragment;
+            if (!plannedFragment.handleBackPress()) {
+                navigateToHome(); // Navigate to home if planned meals fragment cannot handle back press
+            }
+        } else if (currentFragment instanceof FavoriteMealsFragment) {
+            FavoriteMealsFragment favoriteFragment = (FavoriteMealsFragment) currentFragment;
+            if (!favoriteFragment.handleBackPress()) {
+                navigateToHome(); // Navigate to home if favorite fragment cannot handle back press
+            }
+        } else if (currentFragment instanceof ProfileFragment) {
+            ProfileFragment profileFragment = (ProfileFragment) currentFragment;
+            if (!profileFragment.handleBackPress()) {
+                navigateToHome(); // Navigate to home if profile fragment cannot handle back press
+            }
+        } else if (currentFragment instanceof ItemDescriptionFragment) {
+            ItemDescriptionFragment itemDescriptionFragment = (ItemDescriptionFragment) currentFragment;
+            if (!itemDescriptionFragment.handleBackPress()) {
+                navigateToHome(); // Navigate to home if item description fragment cannot handle back press
+            }
+        } else if (currentFragment instanceof SearchMealFragment) {
+            SearchMealFragment searchMealFragment = (SearchMealFragment) currentFragment;
+            if (!searchMealFragment.handleBackPress()) {
+                navigateToHome(); // Navigate to home if search meal fragment cannot handle back press
+            }
+        } else {
+            navigateToHome(); // Default to home for any other fragment
+        }
+    }
+
+    private void navigateToHome() {
+        Fragment selectedFragment = new HomeFragment();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, selectedFragment)
+                .commit();
+        bottomNav.setSelectedItemId(R.id.nav_home);
+    }
+
+
 }

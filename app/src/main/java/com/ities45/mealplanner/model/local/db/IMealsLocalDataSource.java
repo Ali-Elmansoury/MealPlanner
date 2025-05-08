@@ -23,4 +23,6 @@ public interface IMealsLocalDataSource {
     LiveData<List<Meal>> getPlannedMealsByDate(String date);
 
 
+    void syncFavorites(List<Meal> meals);
+    void syncPlanned(List<Meal> meals);
 }

@@ -40,41 +40,39 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/profile_icon" />
 
+        <TextView
+            android:id="@+id/user_email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_48sdp"
+            android:gravity="center"
+            android:text="@string/john_doe"
+            android:fontFamily="@font/montserrat_medium"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="normal"
+            android:textColor="@color/secondary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/user_name" />
+
         <Button
             android:id="@+id/logout_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_65sdp"
+            android:layout_marginTop="@dimen/_100sdp"
+            android:backgroundTint="@color/btn"
+            android:fontFamily="@font/montserrat_medium"
             android:padding="@dimen/_12sdp"
             android:text="@string/logout"
             android:textSize="@dimen/_11ssp"
-            android:fontFamily="@font/montserrat_medium"
-            android:backgroundTint="@color/btn"
-            app:strokeColor="@color/secondary"
-            app:strokeWidth="@dimen/_1sdp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/user_name" />
-
-        <Button
-            android:id="@+id/forgot_password_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/_12sdp"
-            android:layout_marginTop="@dimen/_46sdp"
-            android:textSize="@dimen/_11ssp"
-            android:textColor="@color/btn"
-            android:fontFamily="@font/montserrat_medium"
-            android:text="@string/forgot_password_"
-            android:backgroundTint="@color/white"
+            app:layout_constraintTop_toBottomOf="@+id/user_email"
             app:strokeColor="@color/secondary"
-            app:strokeWidth="@dimen/_1sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/logout_button" />
+            app:strokeWidth="@dimen/_1sdp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

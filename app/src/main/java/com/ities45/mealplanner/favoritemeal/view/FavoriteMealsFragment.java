@@ -25,9 +25,11 @@ import com.ities45.mealplanner.mainactivity.view.IFavoriteMealCommunicator;
 import com.ities45.mealplanner.mainactivity.view.IHomeCommunicator;
 import com.ities45.mealplanner.model.local.db.MealsLocalDataSourceImpl;
 import com.ities45.mealplanner.model.local.networklistener.NetworkManager;
+import com.ities45.mealplanner.model.local.sessionmanager.SessionManager;
 import com.ities45.mealplanner.model.pojo.Meal;
 import com.ities45.mealplanner.model.remote.areas.AreasRemoteDataSourceImpl;
 import com.ities45.mealplanner.model.remote.categories.CategoriesRemoteDataSourceImpl;
+import com.ities45.mealplanner.model.remote.firebase.firestore.FirestoreClient;
 import com.ities45.mealplanner.model.remote.ingredients.IngredientsRemoteDataSourceImpl;
 import com.ities45.mealplanner.model.remote.meals.MealsRemoteDataSourceImpl;
 import com.ities45.mealplanner.model.repository.meals.MealsRepositoryImpl;
@@ -58,7 +60,8 @@ public class FavoriteMealsFragment extends Fragment implements IFavoriteMealsFra
                 AreasRemoteDataSourceImpl.getInstance(getContext()),
                 IngredientsRemoteDataSourceImpl.getInstance(getContext()),
                 NetworkManager.getInstance(getContext(), null),
-                MealsLocalDataSourceImpl.getInstance(getContext())), communicator);
+                MealsLocalDataSourceImpl.getInstance(getContext()),
+                FirestoreClient.getInstance()), communicator, new SessionManager(getContext()));
 
     }
 
@@ -106,6 +109,11 @@ public class FavoriteMealsFragment extends Fragment implements IFavoriteMealsFra
     @Override
     public void showErrMsg(String errMsg) {
         Toast.makeText(getContext(), errMsg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showFBStatus(String msg) {
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
     private void showDeleteDialog(Meal meal){

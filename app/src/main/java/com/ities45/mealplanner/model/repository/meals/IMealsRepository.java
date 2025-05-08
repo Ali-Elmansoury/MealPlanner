@@ -2,9 +2,11 @@ package com.ities45.mealplanner.model.repository.meals;
 
 import androidx.lifecycle.LiveData;
 
+import com.google.firebase.firestore.ListenerRegistration;
 import com.ities45.mealplanner.model.pojo.Meal;
 import com.ities45.mealplanner.model.remote.areas.IAreasNetworkCallback;
 import com.ities45.mealplanner.model.remote.categories.ICategoriesNetworkCallback;
+import com.ities45.mealplanner.model.remote.firebase.firestore.IFirestoreCallback;
 import com.ities45.mealplanner.model.remote.ingredients.I_IngredientsNetworkCallback;
 import com.ities45.mealplanner.model.remote.meals.IMealsNetworkCallback;
 
@@ -60,4 +62,13 @@ public interface IMealsRepository {
     void updateFavStatus(String id, boolean isFav);
     void updatePlannedStatus(String id, boolean isPlanned);
     LiveData<List<Meal>> getPlannedMealsByDate(String date);
+
+
+    void addFavoriteMealFB(Meal meal, IFirestoreCallback.IOperationCallback callback);
+    void addPlannedMealFB(Meal meal, IFirestoreCallback.IOperationCallback callback);
+    ListenerRegistration syncFavoriteMeals(String userId, IFirestoreCallback.ILoadMealsCallback callback);
+    ListenerRegistration syncPlannedMeals(String userId, IFirestoreCallback.ILoadMealsCallback callback);
+
+    void removeFavoriteMeal(String userId, String mealId, IFirestoreCallback.IOperationCallback callback);
+    void removePlannedMeal(String userId, String mealId, IFirestoreCallback.IOperationCallback callback);
 }

@@ -6,6 +6,7 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Delete;
+import androidx.room.Transaction;
 import androidx.room.Update;
 
 import com.ities45.mealplanner.model.pojo.Meal;
@@ -58,5 +59,36 @@ public interface IMealsDao {
 
     @Query("SELECT * FROM meals WHERE isPlanned = 1 AND plannedDate = :date")
     LiveData<List<Meal>> getPlannedMealsByDate(String date);
+
+
+
+
+    @Transaction
+    @Query("DELETE FROM meals WHERE isFav = 1")
+    void deleteAllFavorites();
+
+    @Transaction
+    default void syncFavorites(List<Meal> meals) {
+        deleteAllFavorites();
+        insertAll(meals);
+        // Update favorite status
+        for (Meal meal : meals) {
+            updateFavStatus(meal.getIdMeal(), true);
+        }
+    }
+
+    @Transaction
+    @Query("DELETE FROM meals WHERE isPlanned = 1")
+    void deleteAllPlanned();
+
+    @Transaction
+    default void syncPlanned(List<Meal> meals) {
+        deleteAllPlanned();
+        insertAll(meals);
+        // Update planned status
+        for (Meal meal : meals) {
+            updatePlannedStatus(meal.getIdMeal(), true);
+        }
+    }
 }
 

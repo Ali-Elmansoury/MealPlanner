@@ -29,6 +29,7 @@ import com.ities45.mealplanner.model.pojo.Category;
 import com.ities45.mealplanner.model.pojo.Ingredient;
 import com.ities45.mealplanner.model.remote.areas.AreasRemoteDataSourceImpl;
 import com.ities45.mealplanner.model.remote.categories.CategoriesRemoteDataSourceImpl;
+import com.ities45.mealplanner.model.remote.firebase.firestore.FirestoreClient;
 import com.ities45.mealplanner.model.remote.ingredients.IngredientsRemoteDataSourceImpl;
 import com.ities45.mealplanner.model.remote.meals.MealsRemoteDataSourceImpl;
 import com.ities45.mealplanner.model.repository.meals.MealsRepositoryImpl;
@@ -72,7 +73,8 @@ public class SearchFragment extends Fragment implements ISearchFragmentView {
                 AreasRemoteDataSourceImpl.getInstance(getContext()),
                 IngredientsRemoteDataSourceImpl.getInstance(getContext()),
                 NetworkManager.getInstance(getContext(), null),
-                MealsLocalDataSourceImpl.getInstance(getContext())), communicator);
+                MealsLocalDataSourceImpl.getInstance(getContext()),
+                FirestoreClient.getInstance()), communicator);
     }
 
     @Override
