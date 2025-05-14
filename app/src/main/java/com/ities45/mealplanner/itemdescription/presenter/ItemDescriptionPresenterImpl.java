@@ -58,7 +58,7 @@ public class ItemDescriptionPresenterImpl implements I_ItemDescriptionPresenter 
             @Override
             public void onChanged(Meal meal) {
                 if (meal != null && Boolean.TRUE.equals(meal.getFav())) {
-                    //view.favMealExists();
+                    view.favMealExists();
                 }
                 // Update or insert
                 else if (meal != null) {
@@ -66,7 +66,7 @@ public class ItemDescriptionPresenterImpl implements I_ItemDescriptionPresenter 
                     repo.addFavoriteMealFB(fmeal, new IFirestoreCallback.IOperationCallback() {
                         @Override
                         public void onSuccess() {
-                            //view.fbMealAdded();
+                            view.fbMealAdded();
                         }
 
                         @Override
@@ -74,7 +74,7 @@ public class ItemDescriptionPresenterImpl implements I_ItemDescriptionPresenter 
                             view.fbMealAddFailed(error);
                         }
                     });
-                    //view.favMealAdded();
+                    view.favMealAdded();
                 } else {
                     fmeal.setFav(true);
                     repo.insertLocalMeal(fmeal);
@@ -103,7 +103,7 @@ public class ItemDescriptionPresenterImpl implements I_ItemDescriptionPresenter 
             @Override
             public void onChanged(Meal meal) {
                 if (meal != null && Boolean.TRUE.equals(meal.getPlanned())) {
-                    //view.plannedMealExists();
+                    view.plannedMealExists();
                 }
                 // Update or insert
                 else if (meal != null) {
@@ -111,7 +111,7 @@ public class ItemDescriptionPresenterImpl implements I_ItemDescriptionPresenter 
                     repo.addPlannedMealFB(pmeal, new IFirestoreCallback.IOperationCallback() {
                         @Override
                         public void onSuccess() {
-                            //view.fbMealAdded();
+                            view.fbMealAdded();
                         }
 
                         @Override
@@ -119,7 +119,7 @@ public class ItemDescriptionPresenterImpl implements I_ItemDescriptionPresenter 
                             view.fbMealAddFailed(error);
                         }
                     });
-                    //view.plannedMealAdded();
+                    view.plannedMealAdded();
                 } else {
                     pmeal.setPlanned(true);
                     pmeal.setPlannedDate(date);

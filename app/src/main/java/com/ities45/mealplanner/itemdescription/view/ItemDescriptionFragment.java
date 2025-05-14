@@ -100,7 +100,7 @@ public class ItemDescriptionFragment extends Fragment implements I_ItemDescripti
                 for (Meal meal : meals){
                     presenter.addMealToFav(meal);
                 }
-                //Toast.makeText(getContext(), "fav meals synced", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "fav meals synced", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -115,7 +115,7 @@ public class ItemDescriptionFragment extends Fragment implements I_ItemDescripti
                 for (Meal meal : meals){
                     presenter.addMealToPlanned(meal, meal.getPlannedDate());
                 }
-                //Toast.makeText(getContext(), "planned meals synced", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "planned meals synced", Toast.LENGTH_SHORT).show();
             }
 
             @Override

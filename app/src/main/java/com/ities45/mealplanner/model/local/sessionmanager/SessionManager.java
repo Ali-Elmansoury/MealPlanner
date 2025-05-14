@@ -29,14 +29,14 @@ public class SessionManager {
         editor.putString(KEY_USER_ID, userId);
         editor.putString(KEY_USER_EMAIL, email);
         editor.putString(KEY_USER_NAME, name);
-        editor.apply();
+        editor.commit();
     }
 
     public void createGuestSession(String userId) {
         editor.putBoolean(KEY_IS_LOGGED_IN, true);
         editor.putBoolean(KEY_IS_GUEST, true);
         editor.putString(KEY_USER_ID, userId);
-        editor.apply();
+        editor.commit();
     }
 
     public void createGoogleUserSession(FirebaseUser user) {
@@ -45,12 +45,12 @@ public class SessionManager {
         editor.putString(KEY_USER_ID, user.getUid());
         editor.putString(KEY_USER_EMAIL, user.getEmail());
         editor.putString(KEY_USER_NAME, user.getDisplayName()); // From Google profile
-        editor.apply();
+        editor.commit();
     }
 
     public void clearSession() {
         editor.clear();
-        editor.apply();
+        editor.commit();
     }
 
     public boolean isLoggedIn() {
