@@ -142,7 +142,7 @@ public class MealsLocalDataSourceImpl implements IMealsLocalDataSource{
                 super.run();
                 mealsDao.syncFavorites(meals);
             }
-        };
+        }.start();
     }
 
     @Override
@@ -153,6 +153,6 @@ public class MealsLocalDataSourceImpl implements IMealsLocalDataSource{
                 super.run();
                 mealsDao.syncPlanned(meals);
             }
-        };
+        }.start();
     }
 }
