@@ -1,5 +1,5 @@
 [versions]
-agp = "8.9.2"
+agp = "8.10.0"
 credentials = "1.5.0"
 dotlottieAndroidVersion = "0.6.2"
 firebaseAuth = "23.2.0"
